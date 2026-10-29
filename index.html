@@ -53,6 +53,29 @@ input{width:84px;padding:10px;border:1px solid var(--ln);border-radius:8px;backg
 body.quiz{padding-bottom:28px}
 .fld{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 6px}.fld label{display:block;font-size:12.5px;color:var(--mut);margin-bottom:4px}.fld input{width:100%}
 .plbl{font-size:13px;font-weight:700;margin:12px 0 6px}.pv{margin-top:12px}.pv .pills{margin-bottom:6px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:6px 0 2px}.top h1{flex:1;min-width:0;margin:0}
+.edit{flex:none;display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border:0;border-radius:999px;background:var(--ac);color:#fff;font:inherit;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.18)}.edit svg{width:16px;height:16px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .edit{color:#141414}}
+:root[data-theme="dark"] .edit{color:#141414}
+.mealbox{margin:12px 0}
+.mealbox summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:18px;color:#fff;background:linear-gradient(135deg,#ff8a3d,#ff4f7b);box-shadow:0 6px 16px rgba(255,90,90,.28)}
+.mealbox summary::-webkit-details-marker{display:none}.mealbox summary b{font-size:16px}.mealbox summary small{display:block;font-size:12.5px;font-weight:400;opacity:.92}
+.mealbox summary .ar{margin-left:auto;font-size:18px;transition:transform .2s}.mealbox[open] summary .ar{transform:rotate(180deg)}
+.mtop{display:flex;gap:8px;margin:12px 0 4px}
+.meal{background:var(--card);border:1px solid var(--ln);border-left:5px solid rgb(var(--mc));border-radius:16px;padding:12px;margin:10px 0}
+.mh{display:flex;align-items:center;gap:10px}.mi{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:25px;background:rgba(var(--mc),.22);flex:none}
+.mh h4{margin:0;font-size:15px}.mh small{color:var(--mut);font-size:12px}
+.mm{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px}.mm span{font-size:12px;font-weight:600;padding:4px 9px;border-radius:999px;background:var(--bg);border:1px solid var(--ln)}.mm span.k{background:rgba(var(--mc),.24);border-color:transparent}
+.ing{list-style:none;margin:6px 0;padding:0}.ing li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed var(--ln);font-size:14px}.ing li:last-child{border:0}.ing li span:last-child{font-weight:600;text-align:right}
+.tip{font-size:12.5px;color:var(--mut);margin:4px 0 2px}
+.alt{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.alt button{font:inherit;font-size:12.5px;padding:7px 10px;border-radius:999px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);cursor:pointer}.alt button.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.lg{margin-top:10px;width:100%;padding:11px;border-radius:12px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font:inherit;font-size:13px;font-weight:700;cursor:pointer}.lg.on{background:var(--ok);border-color:var(--ok);color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .alt button.on{color:#141414}}
+:root[data-theme="dark"] .alt button.on{color:#141414}
+.mvr{display:flex;gap:8px;margin-top:8px}.mvr .mv{flex:1;width:auto;margin:0}
+.how{margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--ln)}.how ol{margin:0;padding-left:20px;font-size:13.5px}.how li{margin:5px 0}
+.mvp .fv{flex:1 1 40%;min-width:130px;stroke:var(--tx);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none}.fv circle.eq{fill:var(--ac);stroke:none}
+.fv .pr *{stroke:var(--mut);stroke-width:2}
 </style></head><body class="quiz">
 <div class="w" id="quiz">
 <h1>Let's customise it for your gym</h1>
@@ -61,23 +84,26 @@ body.quiz{padding-bottom:28px}
 <div class="act"><button id="build" class="p" type="button">Build my plan</button><button id="back" type="button" hidden>Back</button><button id="qth" type="button">Theme</button></div>
 </div>
 <div class="w" id="app" hidden>
-<h1 id="title">Your plan</h1>
+<div class="top"><h1 id="title">Your plan</h1><button id="ed" type="button" class="edit" aria-label="Change plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Change plan</button></div>
 <div class="sub" id="sub"></div>
 <div class="pills" id="pills"></div>
 <div class="note" id="rule"></div>
 <div class="card"><h3 id="nh">Nutrition targets</h3><div class="chips" id="ch"></div><div id="nt"></div><div class="row" style="margin-top:10px"><input id="ek" inputmode="numeric" placeholder="kcal"><input id="ep" inputmode="numeric" placeholder="protein g"><button id="ad" class="mini" type="button">Add</button><button id="ud" class="mini" type="button">Reset</button></div></div>
+<details class="mealbox" id="mb"><summary><span style="font-size:30px">🍽️</span><span><b>Meal plan</b><small id="msub">Meals that match your calories and protein</small></span><span class="ar">▾</span></summary><div id="ml"></div></details>
 <div class="tabs" id="tabs"></div>
 <div class="bar"><i id="pb"></i></div>
 <div class="dayt" id="dl"></div>
 <div class="note" id="fatn" hidden></div>
 <details class="warm"><summary>Warm-up (5 min)</summary><div id="wu"></div></details>
 <div id="list"></div>
-<div class="act"><button id="fin" class="p" type="button">Finish session</button><button id="ed" type="button">Change plan</button><button id="th" type="button">Theme</button></div>
+<div class="act"><button id="fin" class="p" type="button">Finish session</button><button id="th" type="button">Theme</button></div>
 </div>
 <div id="t" hidden><b id="tt">0:00</b><button id="a">+30s</button><button id="s">Stop</button></div>
 <script>
 var D=[],M=[];
-var AO={"push-up":"pushup","wide push-up":"pushup","incline push-up":"ipush","decline push-up":"dpush","bench dip":"bdip","chair dip":"bdip","inverted row":"irow","dead bug":"dbug","slow dead bug hold":"dbug","bird dog":"bird","plank saw":"saw","plank shoulder tap":"tap","lying leg raise":"lleg","overhead cable extension":"oext","overhead dumbbell extension":"oext","dumbbell skull crusher":"skull","dumbbell fly":"fly","cable fly":"fly","lat pulldown":"pdown","neutral-grip pulldown":"pdown","straight-arm pulldown":"sap","dumbbell pullover":"povr","leg extension":"lext","diamond push-up":"pushup","diamond push-up + overhead dumbbell extension":"pushup","pike push-up + diamond push-up + dumbbell curl":"pike","glute-bridge walkout":"wout","slow bicycle crunch":"bicy","prone y raise":"prony"};
+var HM={"dumbbell goblet squat":"Backpack goblet squat","one-arm dumbbell row":"One-arm backpack row","dumbbell romanian deadlift":"Backpack Romanian deadlift","dumbbell lateral raise":"Water-bottle lateral raise","dumbbell shoulder press":"Water-bottle shoulder press","dumbbell curl + overhead dumbbell extension":"Water-bottle curl + overhead backpack extension","dumbbell curl":"Water-bottle curl","hammer curl":"Water-bottle hammer curl","seated dumbbell curl, elbow on the thigh":"Seated water-bottle curl, elbow on the thigh","overhead dumbbell extension":"Overhead backpack extension","dumbbell pullover":"Backpack pullover","diamond push-up + overhead dumbbell extension":"Diamond push-up + overhead backpack extension","pike push-up + diamond push-up + dumbbell curl":"Pike push-up + diamond push-up + water-bottle curl","bent-over rear-delt raise":"Bent-over water-bottle rear-delt raise","glute-bridge walkout":"Glute bridge"};
+var HH={"backpack goblet squat":"Hold a backpack packed with books against your chest. Add more books as it gets easy.","backpack romanian deadlift":"Hold a loaded backpack by the handle in front of your thighs and push your hips back.","one-arm backpack row":"Hold a loaded backpack by its handle and rest your other hand on a chair or table.","backpack row":"Hold a loaded backpack in both hands and keep your back flat.","water-bottle lateral raise":"Use two filled water bottles or milk jugs. Fill them with sand or rice to go heavier.","water-bottle shoulder press":"Press two filled water bottles overhead. Use bigger jugs when it gets easy.","water-bottle curl":"Use a filled water bottle or jug in each hand.","water-bottle hammer curl":"Use a filled water bottle or jug in each hand, thumbs up.","seated water-bottle curl, elbow on the thigh":"Use a filled water bottle or jug.","overhead backpack extension":"Hold a loaded backpack with both hands behind your head.","backpack pullover":"Lie on the floor and hold a loaded backpack with both hands.","water-bottle curl + overhead backpack extension":"Use a filled bottle for the curl and a loaded backpack for the extension.","diamond push-up + overhead backpack extension":"Use a loaded backpack for the extension.","pike push-up + diamond push-up + water-bottle curl":"Use a filled water bottle for the curls.","bent-over water-bottle rear-delt raise":"Use two filled water bottles and keep your back flat.","reverse lunge":"To make it harder, hold a loaded backpack at your chest.","rear-foot-elevated split squat":"To make it harder, hold a loaded backpack at your chest.","standing calf raise":"Stand on a step and hold a loaded backpack to add weight.","glute bridge":"Squeeze your glutes at the top and hold for 2 seconds, then lower slowly."};
+var AO={"glute bridge":"bridge","one-arm dumbbell row":"row","seated cable row":"crow","incline db press":"ipress","incline dumbbell press":"ipress","incline barbell or dumbbell press":"ipress","incline machine press":"ipress","rear-delt dumbbell fly":"rfly","reverse pec deck":"rfly","rear-delt fly, elbows high":"rfly","bent-over water-bottle rear-delt raise":"rfly","dumbbell kickback":"kick","dumbbell skull crusher + overhead extension":"skull","weighted crunch":"lcr","side plank":"splank","one-arm backpack row":"row","backpack row":"row","overhead backpack extension":"oext","backpack pullover":"povr","diamond push-up + overhead backpack extension":"pushup","pike push-up + diamond push-up + water-bottle curl":"pike","push-up":"pushup","wide push-up":"pushup","incline push-up":"ipush","decline push-up":"dpush","bench dip":"bdip","chair dip":"bdip","inverted row":"irow","dead bug":"dbug","slow dead bug hold":"dbug","bird dog":"bird","plank saw":"saw","plank shoulder tap":"tap","lying leg raise":"lleg","overhead cable extension":"oext","overhead dumbbell extension":"oext","dumbbell skull crusher":"skull","dumbbell fly":"fly","cable fly":"fly","lat pulldown":"pdown","neutral-grip pulldown":"pdown","straight-arm pulldown":"sap","dumbbell pullover":"povr","leg extension":"lext","diamond push-up":"pushup","diamond push-up + overhead dumbbell extension":"pushup","pike push-up + diamond push-up + dumbbell curl":"pike","glute-bridge walkout":"wout","slow bicycle crunch":"bicy","prone y raise":"prony"};
 var S={d:0,w:{},c:{},th:""};
 try{var saved=JSON.parse(localStorage.getItem("wp1"));if(saved)S=saved}catch(e){}
 if(!S.w)S.w={};
@@ -106,7 +132,7 @@ var QUIZ=[
 {id:"equip",q:"What equipment do you have?",opts:[
 {v:"full",t:"Full gym — machines, cables, barbells and dumbbells"},
 {v:"limited",t:"Limited gym",d:"Dumbbells, a bench, and a pull-up bar"},
-{v:"home",t:"Home workouts",d:"Dumbbells or a backpack, plus bodyweight"}]},
+{v:"home",t:"Home workouts",d:"No dumbbells needed: a backpack, water bottles and bodyweight"}]},
 {id:"level",q:"Current training level",opts:[
 {v:"beginner",t:"Beginner"},
 {v:"intermediate",t:"Returning after a break / intermediate"},
@@ -137,7 +163,7 @@ return {names:{full:full,limited:limited,home:home},sets:sets,reps:reps,rest:res
 function day(n,s,wu,list,coreFocus){return {n:n,s:s,wu:wu,e:list,coreFocus:!!coreFocus}}
 function resolveName(ex,q){
 var b=q.level==="beginner"&&ex.beginner&&ex.beginner[q.equip];
-return b||ex.names[q.equip];
+var n=b||ex.names[q.equip];return q.equip==="home"&&HM[String(n).toLowerCase()]||n;
 }
 function resolveAnim(ex,q){var o=AO[String(resolveName(ex,q)).toLowerCase()];return o||(typeof ex.anim==="string"?ex.anim:ex.anim[q.equip])}
 function timedReps(reps){return reps.indexOf("/")>=0||reps.indexOf("each")>=0||reps.indexOf("sec")>=0}
@@ -180,6 +206,7 @@ else if(ex.lead&&q.level==="intermediate")reps="6–10";
 }
 if(q.time==="45"&&sets>3)sets=3;
 if(q.days==="5"&&q.time==="60"&&sets>3)sets=3;
+var hh=q.equip==="home"&&HH[String(resolveName(ex,q)).toLowerCase()];if(hh)note=note+" "+hh;
 return {sets:sets,rest:rest,reps:reps,note:note};
 }
 var BEG_SQUAT={full:"Goblet squat",limited:"Goblet squat",home:"Dumbbell goblet squat"};
@@ -312,7 +339,7 @@ moves.push(resolveAnim(ex,q)+"|"+ex.prime+"|"+(ex.help||""));
 D.push({n:day.n,s:day.s,wu:day.wu,e:rows});
 M.push(moves);
 });
-var extra=q.equip==="home"?" Home sessions use dumbbells and bodyweight. A loaded backpack works if you do not have dumbbells.":q.equip==="limited"?" Built for dumbbells, a bench, and a pull-up bar.":"";
+var extra=q.equip==="home"?" Home sessions need no dumbbells: use a loaded backpack, filled water bottles, a chair and your bodyweight.":q.equip==="limited"?" Built for dumbbells, a bench, and a pull-up bar.":"";
 document.title=prog.title;
 $("title").textContent=prog.title;
 $("sub").textContent=prog.blurb+extra;
@@ -372,7 +399,7 @@ tot+=e[1];dn+=c.filter(Boolean).length;
 var all=c.filter(Boolean).length==e[1];
 var b="";
 for(var s=0;s<e[1];s++)b+='<button type="button" class="'+(c[s]?"d":"")+'" data-k="'+k+'" data-s="'+s+'" data-r="'+e[3]+'">'+(s+1)+"</button>";
-return '<div class="card'+(all?" done":"")+'"><h3>'+(j+1)+". "+esc(e[0])+'</h3><div class="meta">'+e[1]+" × "+esc(e[2])+" · rest "+restLabel(e[3])+'</div><div class="row"><div class="sets">'+b+'</div><input inputmode="decimal" placeholder="kg/lb" value="'+esc(w)+'" data-w="'+esc(e[0])+'"></div><div class="note">'+esc(e[4])+'</div><button type="button" class="mv" data-m="'+k+'">'+(O==k?"Hide":"Show")+' movement &amp; muscles</button>'+(O==k?pn(S.d,j):"")+"</div>";
+return '<div class="card'+(all?" done":"")+'"><h3>'+(j+1)+". "+esc(e[0])+'</h3><div class="meta">'+e[1]+" × "+esc(e[2])+" · rest "+restLabel(e[3])+'</div><div class="row"><div class="sets">'+b+'</div><input inputmode="decimal" placeholder="kg/lb" value="'+esc(w)+'" data-w="'+esc(e[0])+'"></div><div class="note">'+esc(e[4])+'</div><div class="mvr"><button type="button" class="mv" data-m="'+k+'">'+(O==k?"Hide demo":"Demo &amp; muscles")+'</button><button type="button" class="mv" data-h="'+k+'">'+(HO[k]?"Hide steps":"How to do it")+'</button></div>'+(HO[k]?hw(M[S.d][j].split("|")[0]):"")+(O==k?pn(S.d,j):"")+"</div>";
 }).join("");
 $("pb").style.width=(tot?dn/tot*100:0)+"%";
 if(O&&$("av"))an(M[S.d][+O.split("-")[1]].split("|")[0]);else cancelAnimationFrame(raf);
@@ -390,7 +417,7 @@ function toggleTheme(){S.th=S.th=="dark"?"light":"dark";sv();th()}
 $("th").onclick=toggleTheme;
 $("qth").onclick=toggleTheme;
 $("qq").onclick=function(e){var b=e.target.closest("button");if(!b)return;
-if(b.dataset.p){var id=b.dataset.p,v=b.dataset.v;if(id==="u"&&dp.u!==v)convU(v);dp[id]=v;if(id==="goal"&&v==="keep")dp.pace="";renderQuiz();return}
+if(b.dataset.p){var id=b.dataset.p,v=b.dataset.v;if(id==="u"&&dp.u!==v)convU(v);dp[id]=v;if(id==="goal"&&(v==="keep"||v==="recomp"))dp.pace="";renderQuiz();return}
 if(!b.dataset.k)return;draft[b.dataset.k]=b.dataset.v;renderQuiz()};
 $("qq").oninput=function(e){var k=e.target.dataset.pi;if(k){dp[k]=e.target.value.replace(",",".");updBuild()}};
 $("build").onclick=function(){if(!validQ(draft)||!validP(dp))return;S.p=copyP(dp);var next=copyQ(draft);var changed=JSON.stringify(S.q||null)!==JSON.stringify(next);S.q=next;if(changed){S.c={};S.d=0;O=""}sv();showApp();window.scrollTo(0,0)};
@@ -417,9 +444,9 @@ var adj=p.goal==="lose"?-({gentle:300,std:500,fast:750}[p.pace]):p.goal==="gain"
 if(adj<0&&r.bmi<18.5){adj=0;k=r.tdee;r.note="Your BMI is under 18.5, so I set maintenance calories instead of a deficit."}
 if(k<min){k=min;adj=k-r.tdee;r.note="Calories were raised to a safe minimum, never below your BMR."}
 k=Math.round(k/10)*10;r.k=k;r.adj=Math.round(k-r.tdee);r.wk=r.adj*7/7700;
-var pr=Math.round(b.w*(p.goal==="lose"?2:1.8)/5)*5,ft=Math.round(Math.max(k*0.25/9,0.6*b.w)/5)*5;
+var pr=Math.round(b.w*(p.goal==="lose"?2:p.goal==="recomp"?2.2:1.8)/5)*5,ft=Math.round(Math.max(k*0.25/9,0.6*b.w)/5)*5;
 function mk(kc){return {k:kc,p:pr,f:ft,c:Math.max(0,Math.round((kc-pr*4-ft*9)/4))}}
-var n=+days||4,base=k-(n*100-(7-n)*150)/7,tk=Math.round((base+100)/10)*10,rk=Math.round((base-150)/10)*10;
+var n=+days||4,o1=p.goal==="recomp"?150:100,o2=p.goal==="recomp"?-200:-150,base=k-(n*o1+(7-n)*o2)/7,tk=Math.round((base+o1)/10)*10,rk=Math.round((base+o2)/10)*10;
 if(rk<min||r.note){tk=rk=k}
 r.t=mk(tk);r.r=mk(rk);r.ready=true;return r;
 }
@@ -434,7 +461,7 @@ h+='<div class="plbl">Units</div><div class="chips">'+o("u","m","Metric (kg, cm)
 h+='<div class="plbl">Sex</div><div class="chips">'+o("sex","m","Male")+o("sex","f","Female")+"</div>";
 h+='<div class="plbl">Your numbers</div><div class="fld"><div><label>Age (years)</label><input data-pi="age" inputmode="numeric" value="'+esc(dp.age)+'"></div><div><label>Height ('+(i?"in":"cm")+')</label><input data-pi="h" inputmode="decimal" value="'+esc(dp.h)+'"></div><div><label>Weight ('+(i?"lb":"kg")+')</label><input data-pi="w" inputmode="decimal" value="'+esc(dp.w)+'"></div></div>';
 h+='<div class="plbl">Daily life outside your workouts</div><div class="qopt">'+o("act","sit","Mostly sitting","Desk job, under 5,000 steps a day")+o("act","light","Lightly active","About 5,000 to 8,000 steps a day")+o("act","active","Active","8,000 to 12,000 steps, or on your feet at work")+o("act","very","Very active","12,000+ steps a day or a physical job")+"</div>";
-h+='<div class="plbl">Calorie goal</div><div class="qopt">'+o("goal","lose","Lose weight","Eat below maintenance")+o("goal","keep","Maintain weight","Eat at maintenance")+o("goal","gain","Gain weight","Eat above maintenance")+"</div>";
+h+='<div class="plbl">Calorie goal</div><div class="qopt">'+o("goal","lose","Lose weight","Eat below maintenance")+o("goal","keep","Maintain weight","Eat at maintenance")+o("goal","recomp","Lose fat and build muscle together","Eat around maintenance, more on training days. Best for beginners, returning lifters or higher body fat")+o("goal","gain","Gain weight","Eat above maintenance")+"</div>";
 if(dp.goal==="lose"||dp.goal==="gain"){var L=dp.goal==="lose",a=L?[300,500,750]:[200,300,450];
 function pd(x){return x+" kcal "+(L?"below":"above")+" maintenance, about "+wkTxt(x*7/7700,dp.u)+" a week"}
 h+='<div class="plbl">How fast?</div><div class="qopt">'+o("pace","gentle","Gentle",pd(a[0]))+o("pace","std","Steady",pd(a[1]))+o("pace","fast","Faster",pd(a[2]))+"</div>"}
@@ -454,18 +481,99 @@ function updBuild(){$("build").disabled=qdone!==QUIZ.length||!validP(dp);var e=$
 function targets(){
 var r=S.p&&calcP(S.p,S.q&&S.q.days);
 if(!r||!r.ready)return null;
-var lab={lose:"weight loss",keep:"maintenance",gain:"weight gain"};
+var lab={lose:"weight loss",keep:"maintenance",recomp:"fat loss + muscle gain",gain:"weight gain"};
 return {label:lab[S.p.goal],r:r,map:{t:Object.assign({n:"Training day"},r.t),r:Object.assign({n:"Rest day"},r.r)}};
 }
 function nd(){
 var pack=targets();
-if(!pack){$("nh").textContent="Nutrition targets";$("ch").innerHTML="";$("nt").innerHTML='<div class="note">Add your age, height, weight and goal to get your BMI, BMR and daily calories.</div><button id="addp" type="button" class="mini" style="margin-top:8px">Add my details</button>';return}
+if(!pack){$("nh").textContent="Nutrition targets";$("ch").innerHTML="";$("nt").innerHTML='<div class="note">Add your age, height, weight and goal to get your BMI, BMR and daily calories.</div><button id="addp" type="button" class="mini" style="margin-top:8px">Add my details</button>';$("ml").innerHTML='<div class="note" style="margin-top:10px">Add your body details first. Your meals are built from your calorie and protein targets.</div>';$("msub").textContent="Add your details to unlock";return}
 var N=pack.map,t=S.n&&N[S.n]?S.n:"t",x=N[t],e=(S.e&&S.e[dk()])||{k:0,p:0},r=pack.r,u=S.p.u;
 $("nh").textContent="Nutrition targets · "+pack.label;
 $("ch").innerHTML=Object.keys(N).map(function(i){return '<button type="button" class="'+(i==t?"on":"")+'" data-n="'+i+'">'+N[i].n+"</button>"}).join("");
-var goal=S.p.goal==="keep"?"Target is your maintenance calories.":"Target is "+Math.abs(r.adj)+" kcal "+(r.adj<0?"below":"above")+" maintenance, about "+wkTxt(r.wk,u)+" a week.";
+var goal=S.p.goal==="keep"?"Target is your maintenance calories.":S.p.goal==="recomp"?"Calories average out at maintenance: more on training days, less on rest days. The scale will barely move, so track waist, photos and lifts.":"Target is "+Math.abs(r.adj)+" kcal "+(r.adj<0?"below":"above")+" maintenance, about "+wkTxt(r.wk,u)+" a week.";
 $("nt").innerHTML='<div class="pills" style="margin-top:8px"><span>BMI '+r.bmi.toFixed(1)+" · "+r.cat+"</span><span>BMR "+fm(r.bmr)+" kcal</span><span>Maintenance "+fm(r.tdee)+" kcal</span></div>"+pb("Calories",e.k,x.k,"kcal")+pb("Protein",e.p,x.p,"g")+'<div class="note">Fat ~'+x.f+" g · Carbs ~"+x.c+" g. "+goal+" Weigh in 3 times a week and change calories by about 100 kcal if the trend stalls.</div>"+(r.note?'<div class="note">'+esc(r.note)+"</div>":"")+'<div class="note">BMR uses the Mifflin-St Jeor formula. Maintenance = BMR × '+r.af.toFixed(2)+" (your daily life plus training days). BMI ignores muscle, so a lean, muscular person can read high. These are starting estimates, not medical advice.</div>";
+ml(x);
 }
+/*MEALS*/
+var F={chk:["Chicken breast",165,31,0,3.6],egg:["Whole eggs",143,12.6,.7,9.5,"egg",50],ewh:["Egg whites",52,11,.7,.2],gy:["Greek yogurt (plain, 0%)",59,10,3.6,.4],tun:["Tuna (canned in water)",116,26,0,1],sal:["Salmon",206,22,0,12],bef:["Lean beef (cooked)",200,27,0,10],cot:["Low-fat cottage cheese",72,12,3.4,1],whe:["Whey protein powder",400,80,8,6],tof:["Firm tofu",144,17,3,9],cod:["White fish (cod)",105,23,0,.9],tur:["Turkey breast",135,30,0,1],oat:["Rolled oats (dry)",389,17,66,7],ric:["Rice (cooked)",130,2.7,28,.3],swp:["Sweet potato",90,2,21,.1],pot:["Potatoes (boiled)",87,1.9,20,.1],brd:["Whole-wheat bread",250,12,43,3.5,"slice",35],pas:["Pasta (cooked)",158,5.8,31,.9],qui:["Quinoa (cooked)",120,4.4,21,1.9],ban:["Banana",89,1.1,23,.3,"banana",120],wrp:["Whole-wheat wrap",300,9,50,7,"wrap",60],cou:["Couscous (cooked)",112,3.8,23,.2],app:["Apple",52,.3,14,.2,"apple",180],ber:["Berries",57,.7,14,.3],dat:["Dates",282,2.5,75,.4,"date",8],len:["Lentils (cooked)",116,9,20,.4]};
+var LM={whe:[15,50],egg:[50,400],ewh:[60,400],gy:[100,400],cot:[80,300],tun:[30,250],dat:[16,80],ban:[60,240],app:[90,450],wrp:[60,180],brd:[35,245],ber:[50,350]};
+var X={av:["Avocado","½ small (50 g)",80,1,4,7],oil:["Olive oil","1 tbsp (14 g)",119,0,0,13.5],alm:["Almonds","20 g",116,4,4,10],veg:["Salad or cooked vegetables","150 g",35,2,7,.3],bn:["Banana","1 medium (120 g)",107,1,28,.4]};
+function mo(id,n,i,P,C,x,v,tip){return {id:id,n:n,i:i,P:P,C:C,x:x,v:v,tip:tip}}
+var MS=[
+{k:"b",n:"Breakfast",t:"7–9 am",c:"255,184,77",kp:.24,pp:.22,o:[
+mo("b1","Eggs, toast & avocado","🍳","egg","brd",["av"],1,"Scramble or poach the eggs. Add tomato or spinach for free."),
+mo("b2","Protein oats & banana","🥣","whe","oat",["bn"],1,"Cook the oats in water or milk, then stir in the whey off the heat."),
+mo("b3","Greek yogurt power bowl","🫐","gy","oat",["alm"],1,"Top with the oats, almonds and a pinch of cinnamon."),
+mo("b4","Egg-white veggie wrap","🌯","ewh","wrp",["veg","oil"],1,"Fry the whites with the veg in the oil, then roll it in the wrap.")]},
+{k:"s1",n:"Morning snack",t:"10–11 am",c:"123,216,143",kp:.10,pp:.11,o:[
+mo("s1","Cottage cheese & apple","🍎","cot","app",[],1,"Add cinnamon or a few nuts if you like."),
+mo("s2","Greek yogurt & berries","🍓","gy","ber",[],1,"Plain yogurt keeps protein high. Sweeten with a little honey."),
+mo("s3","Whey shake & banana","🥤","whe","ban",[],1,"Blend with water or milk for a quick snack."),
+mo("s4","Turkey roll-ups & apple","🥬","tur","app",[],0,"Roll the turkey slices around cucumber or lettuce.")]},
+{k:"l",n:"Lunch",t:"12–2 pm",c:"255,122,89",kp:.28,pp:.28,o:[
+mo("l1","Chicken, rice & salad","🍗","chk","ric",["veg","oil"],0,"Grill or air-fry the chicken. Season with lemon and spices."),
+mo("l2","Tuna pasta salad","🐟","tun","pas",["veg","oil"],0,"Toss with lemon, black pepper and the chopped veg."),
+mo("l3","Beef & sweet potato bowl","🥩","bef","swp",["veg"],0,"Roast the sweet potato and pan-sear the beef."),
+mo("l4","Tofu stir-fry & rice","🥢","tof","ric",["veg","oil"],1,"Press the tofu and sear it until golden before adding the veg."),
+mo("l5","Lentil & egg bowl","🥗","egg","len",["veg","oil"],1,"Top warm lentils with soft-boiled eggs and veg.")]},
+{k:"s2",n:"Pre or post-workout snack",t:"Around training",c:"255,196,61",kp:.10,pp:.11,o:[
+mo("t1","Protein shake & dates","🥤","whe","dat",[],1,"Fast protein plus quick carbs, ideal after training."),
+mo("t2","Greek yogurt & banana","🍌","gy","ban",[],1,"Slice the banana over the yogurt and add cinnamon."),
+mo("t3","Boiled eggs & fruit","🥚","egg","app",[],1,"Boil a batch at the start of the week."),
+mo("t4","Tuna on toast","🐟","tun","brd",[],0,"Mix the tuna with a little yogurt and lemon.")]},
+{k:"d",n:"Dinner",t:"7–9 pm",c:"124,156,255",kp:.28,pp:.28,o:[
+mo("d1","Salmon, potatoes & greens","🍣","sal","pot",["veg"],0,"Bake the salmon for 12 to 15 minutes and steam the greens."),
+mo("d2","Chicken & couscous","🍛","chk","cou",["veg","oil"],0,"Roast the chicken with paprika and garlic."),
+mo("d3","Beef chili & rice","🌶️","bef","ric",["veg"],0,"Simmer with tomatoes and chili. Add beans if you like."),
+mo("d4","Tofu & sweet potato curry","🍲","tof","swp",["veg","oil"],1,"Simmer in tomato, curry spices and a splash of stock."),
+mo("d5","Shakshuka-style eggs & bread","🍳","egg","brd",["veg"],1,"Poach the eggs in spiced tomato and veg."),
+mo("d6","White fish & quinoa","🐠","cod","qui",["veg","oil"],0,"Season with lemon and herbs.")]}];
+var MP={};
+function lim(id,r){return LM[id]||(r?[40,400]:[25,500])}
+function cl(v,l){return Math.min(l[1],Math.max(l[0],v))}
+function solve(o,K,Pt){
+var P=F[o.P],C=F[o.C],Ke=0,Pe=0;
+o.x.forEach(function(i){Ke+=X[i][2];Pe+=X[i][3]});
+var kp=P[1]/100,pp=P[2]/100,kc=C[1]/100,pc=C[2]/100,Kr=K-Ke,Pr=Pt-Pe,d=pp*kc-pc*kp,lp=lim(o.P,1),lc=lim(o.C,0),gp=(Pr*kc-pc*Kr)/d,gc=(pp*Kr-kp*Pr)/d;
+if(!isFinite(gp)||!isFinite(gc)){gp=lp[0];gc=(Kr-kp*gp)/kc}
+if(gc<lc[0]||gc>lc[1]){gc=cl(gc,lc);gp=(Pr-pc*gc)/pp}
+if(gp<lp[0]||gp>lp[1]){gp=cl(gp,lp);gc=cl((Kr-kp*gp)/kc,lc)}
+return [gp,gc];
+}
+function rdg(id,g){var f=F[id];if(f[5]){var st=id==="ban"||id==="app"?.5:1,n=Math.max(st,Math.round(g/f[6]/st)*st);return {n:n,g:Math.round(n*f[6])}}return {n:0,g:Math.max(5,Math.round(g/5)*5)}}
+function fh(n){var w=Math.floor(n);return n%1?(w?w:"")+"½":String(n)}
+function build(o,K,Pt){
+var s=solve(o,K,Pt),r=[],t={k:0,p:0,c:0,f:0};
+[[o.P,s[0]],[o.C,s[1]]].forEach(function(a){var f=F[a[0]],q=rdg(a[0],a[1]),m=q.g/100;t.k+=f[1]*m;t.p+=f[2]*m;t.c+=f[3]*m;t.f+=f[4]*m;r.push([f[0],f[5]?fh(q.n)+" "+f[5]+(q.n>1?"s":"")+" · "+q.g+" g":q.g+" g"])});
+o.x.forEach(function(i){var e=X[i];t.k+=e[2];t.p+=e[3];t.c+=e[4];t.f+=e[5];r.push([e[0],e[1]])});
+for(var z in t)t[z]=Math.round(t[z]);
+return {t:t,r:r};
+}
+function ml(x){
+var diet=!!S.vg,tot={k:0,p:0},body="";
+MS.forEach(function(sl){
+var list=sl.o.filter(function(o){return !diet||o.v}),sel=S.mp&&S.mp[sl.k],cur=list.filter(function(o){return o.id===sel})[0]||list[0],b=build(cur,x.k*sl.kp,x.p*sl.pp),dn=S.ml&&S.ml[dk()]&&S.ml[dk()][sl.k];
+tot.k+=b.t.k;tot.p+=b.t.p;MP[sl.k]=[b.t.k,b.t.p];
+body+='<div class="meal" style="--mc:'+sl.c+'"><div class="mh"><div class="mi">'+cur.i+'</div><div><h4>'+esc(cur.n)+"</h4><small>"+esc(sl.n)+" · "+sl.t+"</small></div></div>"
++'<div class="mm"><span class="k">'+b.t.k+" kcal</span><span>"+b.t.p+" g protein</span><span>"+b.t.c+" g carbs</span><span>"+b.t.f+" g fat</span></div>"
++'<ul class="ing">'+b.r.map(function(r){return "<li><span>"+esc(r[0])+"</span><span>"+esc(r[1])+"</span></li>"}).join("")+'</ul><div class="tip">'+esc(cur.tip)+"</div>"
++'<div class="alt">'+list.map(function(o){return '<button type="button" class="'+(o===cur?"on":"")+'" data-mo="'+sl.k+":"+o.id+'">'+o.i+" "+esc(o.n)+"</button>"}).join("")+"</div>"
++'<button type="button" class="lg'+(dn?" on":"")+'" data-lg="'+sl.k+'">'+(dn?"Logged ✓ Tap to undo":"+ Log this meal")+"</button></div>";
+});
+$("msub").textContent="About "+fm(tot.k)+" kcal · "+tot.p+" g protein";
+$("ml").innerHTML='<div class="mtop"><div class="chips" style="flex:1"><button type="button" class="'+(diet?"":"on")+'" data-dt="a">All foods</button><button type="button" class="'+(diet?"on":"")+'" data-dt="v">Vegetarian</button></div></div>'
++'<div class="mm" style="--mc:255,138,61"><span class="k">'+fm(tot.k)+" kcal planned</span><span>"+tot.p+" g protein</span><span>Target "+fm(x.k)+" kcal · "+x.p+" g</span></div>"+body
++'<div class="note">Amounts are cooked weights unless marked dry. Tap any option under a meal to swap it. Amounts re-adjust so the day still hits your numbers.</div>';
+}
+function lgm(sl){var d=dk(),m=MP[sl];S.e=S.e||{};S.ml=S.ml||{};var g=S.ml[d]=S.ml[d]||{},o=S.e[d]=S.e[d]||{k:0,p:0};
+if(g[sl]){o.k-=g[sl][0];o.p-=g[sl][1];delete g[sl]}else{g[sl]=[m[0],m[1]];o.k+=m[0];o.p+=m[1]}
+sv();nd()}
+$("ml").onclick=function(e){var b=e.target.closest("button");if(!b)return;
+if(b.dataset.dt){S.vg=b.dataset.dt==="v";sv();nd()}
+else if(b.dataset.mo){var a=b.dataset.mo.split(":");S.mp=S.mp||{};S.mp[a[0]]=a[1];sv();nd()}
+else if(b.dataset.lg)lgm(b.dataset.lg)};
+/*END*/
+
 $("nt").onclick=function(e){if(e.target.id==="addp"){draft=copyQ(S.q);dp=copyP(S.p||dp);showQuiz();window.scrollTo(0,0)}};
 $("ch").onclick=function(e){var b=e.target.closest("button");if(b){S.n=b.dataset.n;sv();nd()}};
 $("ad").onclick=function(){var k=+$("ek").value||0,p=+$("ep").value||0;S.e=S.e||{};var d=dk(),o=S.e[d]||{k:0,p:0};S.e[d]={k:o.k+k,p:o.p+p};$("ek").value="";$("ep").value="";sv();nd()};
@@ -494,22 +602,105 @@ sap:"50,12,50,28,58,18,66,8,50,58,52,75,50,90|50,12,50,28,52,43,54,58,50,58,52,7
 povr:"22,53,32,56,20,56,8,58,62,56,78,64,74,90|22,53,32,56,33,42,33,26,62,56,78,64,74,90",
 lext:"24,22,22,36,26,52,36,60,30,64,50,64,52,86|24,22,22,36,26,52,36,60,30,64,50,64,76,64",
 pike:"70,58,60,52,64,70,68,88,44,36,30,62,12,88|72,76,62,66,56,76,68,88,44,38,30,62,12,88",
-wout:"14,78,24,78,34,82,44,84,50,58,68,66,76,88|14,78,24,78,34,82,44,84,46,62,70,72,92,86",
+wout:"10,84,22,84,32,86,44,88,46,60,66,66,62,90|10,84,22,84,32,86,44,88,46,62,66,74,84,90",
 bicy:"24,60,30,66,34,56,26,62,54,80,46,62,62,70|24,62,30,68,38,60,28,62,54,80,68,74,88,80",
 prony:"74,76,62,78,76,82,90,84,34,80,22,82,10,84|74,76,62,78,76,70,90,60,34,80,22,82,10,84"});
 PR.skull=BN;PR.fly=BN;PR.povr=BN;PR.ipush='<path d="M64 60H98M90 60V90"/>';PR.dpush='<path d="M4 60H30M10 60V90"/>';PR.bdip='<path d="M10 60H34M14 60V90"/>';PR.irow='<path d="M58 44H92"/>';
 NE=NE.concat(["pushup","ipush","dpush","bdip","irow","dbug","bird","saw","tap","lleg","pike","wout","bicy","prony"]);
+PS.bridge="10,84,22,84,32,86,44,88,46,84,64,68,62,90|10,84,22,84,32,86,44,88,40,66,64,68,62,90";
+NE=NE.concat(["bridge"]);
+PS.rfly="66,32,58,38,59,52,60,66,36,54,38,72,36,90|66,32,58,38,50,48,48,58,36,54,38,72,36,90";
+PS.ipress="12,34,20,44,34,46,24,38,40,68,58,70,56,90|12,34,20,44,21,29,22,14,40,68,58,70,56,90";
+PS.kick="66,32,58,38,44,40,44,56,36,54,38,72,36,90|66,32,58,38,44,40,28,42,36,54,38,72,36,90";
+PS.splank="14,56,24,62,24,86,40,88,54,86,72,83,88,90|14,56,24,62,24,86,40,88,54,75,72,83,88,90";
+PS.lcr="14,78,24,82,18,72,12,76,56,82,70,64,68,90|22,62,32,68,26,58,20,64,56,82,70,64,68,90";
+PR.ipress='<path d="M6 32L44 72H62"/>';
+NE=NE.concat(["splank"]);
+var HOLD={bridge:1},FP={
+lat:"50,16,50,30,50,62,65,45,66,60,56,76,56,90|50,16,50,30,50,62,78,32,92,28,56,76,56,90",
+ohp:"50,16,50,30,50,62,74,40,70,28,56,76,56,90|50,16,50,30,50,62,66,16,64,2,56,76,56,90",
+curl:"50,16,50,30,50,62,64,44,64,58,56,76,56,90|50,16,50,30,50,62,64,44,66,31,56,76,56,90",
+squat:"50,16,50,30,50,62,58,40,52,36,58,76,60,90|50,36,50,50,50,76,58,60,52,56,68,80,60,90",
+lunge:"50,16,50,30,50,62,63,44,64,58,57,76,57,90,43,76,43,90|50,30,50,44,50,72,63,58,64,72,60,80,60,92,44,86,40,90",
+pullup:"50,24,50,38,50,66,66,22,70,8,55,80,55,92|50,15,50,29,50,56,67,31,70,8,55,70,55,84",
+pdown:"50,30,50,44,50,72,68,28,72,10,60,74,60,90|50,30,50,44,50,72,67,52,64,42,60,74,60,90",
+fpull:"50,16,50,30,50,62,60,34,55,26,56,76,56,90|50,16,50,30,50,62,76,30,64,16,56,76,56,90",
+rfly:"50,48,50,42,50,62,62,56,63,70,56,76,56,90|50,48,50,42,50,62,78,44,90,46,56,76,56,90",
+row:"50,48,50,42,50,62,62,58,63,72,56,76,56,90|50,48,50,42,50,62,68,46,62,56,56,76,56,90",
+prony:"50,16,50,30,50,62,66,44,72,56,56,76,56,90|50,16,50,30,50,62,68,18,78,6,56,76,56,90",
+fly:"50,16,50,30,50,62,74,34,88,38,56,76,56,90|50,16,50,30,50,62,62,40,52,40,56,76,56,90"},
+VL={rfly:"Back view",row:"Back view",prony:"Back view",fly:"Arm path"},
+PF={pullup:'<path d="M26 8H74"/>',pdown:'<path d="M26 8H74"/>'},HO={};
+var HW={
+press:["Lie on the bench or floor with your feet planted and your shoulder blades pulled together.","Lower the weight to the middle of your chest, elbows about 45° from your body.","Press back up until your arms are straight. Do not bounce off your chest."],
+ohp:["Sit or stand tall with the weights at shoulder height and your core tight.","Press straight up until your arms are nearly straight, without leaning back.","Lower slowly back to shoulder height."],
+dips:["Hold the bars with straight arms and lean slightly forward.","Lower until your elbows reach about 90°.","Press up until your arms are straight again."],
+lat:["Stand tall with a weight in each hand by your sides and a soft bend in your elbows.","Raise your arms out to the sides, not in front, up to shoulder height. Think of pouring a jug with your little fingers up.","Lower slowly for about 2 seconds. Do not swing your body."],
+push:["Stand with your elbows pinned to your sides, holding the rope or bar at chest height.","Press down until your arms are straight, keeping your elbows still.","Let it rise slowly until your forearms are just past parallel."],
+pullup:["Hang from the bar with your hands just outside shoulder width.","Pull your elbows down toward your hips until your chin clears the bar.","Lower slowly until your arms are fully straight."],
+row:["Hinge forward at the hips with a flat back, holding the weight with straight arms.","Pull it toward your lower ribs and squeeze your shoulder blades together.","Lower under control without rounding your back."],
+crow:["Sit tall with your knees slightly bent and hold the handle with straight arms.","Pull the handle to your stomach, leading with your elbows.","Return slowly and let your shoulder blades stretch forward."],
+fpull:["Stand with the handle or your arms at face height.","Pull toward your face, keeping your elbows high and wide.","Return slowly with your shoulders down."],
+curl:["Stand tall with the weights at your sides and your elbows pinned.","Curl them up toward your shoulders without swinging.","Lower slowly until your arms are straight."],
+squat:["Stand with your feet shoulder-width apart, toes slightly out, and brace your core.","Sit your hips back and down until your thighs are about parallel, knees over your toes.","Press through your whole foot to stand up tall."],
+rdl:["Stand tall holding the weight in front of your thighs with soft knees.","Push your hips straight back, sliding the weight down your legs with a flat back.","Stop at a hamstring stretch, then drive your hips forward to stand."],
+lpress:["Sit back in the seat with your feet shoulder-width on the platform.","Lower the platform until your knees reach about 90°, keeping your lower back on the pad.","Press up without locking out your knees."],
+lunge:["Stand tall with your core tight.","Step and lower until both knees reach about 90°, front knee over your ankle.","Push through your front foot to return to standing."],
+lcurl:["Set the pad just above your heels.","Curl your heels toward your glutes and squeeze your hamstrings.","Lower slowly until your legs are almost straight."],
+calf:["Stand on the edge of a step with your heels hanging off, holding something for balance.","Rise onto your toes as high as you can and pause for a second.","Lower slowly until you feel a stretch in your calves."],
+leghr:["Hang from the bar with your legs straight, or bend your knees to make it easier.","Raise your legs by curling your pelvis up toward your belly button.","Lower slowly and do not swing."],
+lleg:["Lie on your back with your legs straight and your lower back pressed into the floor.","Raise your legs until they point at the ceiling.","Lower slowly, stopping before your lower back lifts."],
+crunch:["Kneel under the cable with the rope beside your head and your hips still.","Round your spine and curl your ribs toward your hips.","Return slowly without letting your hips move."],
+roll:["Kneel with the wheel under your shoulders and brace your abs.","Roll out only as far as you can keep your lower back flat.","Pull back using your abs, not your hips."],
+pallof:["Stand sideways to the cable or band and hold the handle at your chest.","Press your hands straight out and hold, resisting the pull to turn.","Bring your hands back in slowly."],
+plank:["Place your forearms on the floor under your shoulders.","Squeeze your glutes and abs so your body is one straight line.","Hold and breathe steadily. For a side plank, stack your feet and lift your hips."],
+pushup:["Start in a plank with your hands a little wider than your shoulders and your body in a straight line.","Lower your chest toward the floor with your elbows about 45° from your body.","Press the floor away until your arms are straight."],
+ipush:["Place your hands on a bench or sturdy table and walk your feet back into a straight line.","Lower your chest to the edge.","Press back up. A higher surface makes it easier."],
+dpush:["Put your feet on a chair or bench and your hands on the floor, body in a straight line.","Lower your chest toward the floor.","Press back up without letting your hips sag."],
+pike:["Start with your hips high in an upside-down V, hands and feet on the floor.","Bend your elbows and lower your head toward the floor between your hands.","Press back up to the V."],
+bdip:["Sit on the edge of a chair, hands beside your hips, then slide your hips forward off the seat.","Lower until your elbows reach about 90°, keeping your back close to the chair.","Press up through your palms."],
+irow:["Lie under a sturdy table or bar and grip it, body straight, heels on the floor.","Pull your chest up to the bar and squeeze your shoulder blades.","Lower slowly until your arms are straight."],
+dbug:["Lie on your back with your arms up and your knees over your hips.","Lower the opposite arm and leg toward the floor while pressing your lower back flat.","Return and switch sides."],
+bird:["Start on your hands and knees with a flat back.","Reach one arm forward and the opposite leg back until both are level with your spine.","Pause, return, and switch sides without twisting."],
+saw:["Set up in a forearm plank with your feet on a towel or sliders.","Rock your body forward and back a few centimeters, staying rigid.","Keep your hips level the whole time."],
+tap:["Get into a high plank with your feet slightly wider than your shoulders.","Lift one hand to tap the opposite shoulder, keeping your hips still.","Return and switch hands."],
+oext:["Hold the weight with both hands behind your head, elbows pointing up.","Straighten your arms overhead without moving your upper arms.","Lower slowly back behind your head."],
+skull:["Lie on your back holding the weights above your chest with straight arms.","Bend your elbows to lower the weights toward your forehead.","Extend your arms back up, keeping your elbows still."],
+fly:["Lie on your back with your arms above your chest and a slight bend in your elbows.","Open your arms wide in an arc until you feel a chest stretch.","Bring them back together over your chest."],
+pdown:["Sit with your thighs under the pad and hold the bar slightly wider than your shoulders.","Pull the bar to your upper chest, driving your elbows down.","Let it rise slowly with control."],
+sap:["Stand facing the cable with your arms straight in front at head height.","Keeping your arms straight, sweep the bar down to your thighs.","Return slowly."],
+povr:["Lie on your back holding one weight above your chest with both hands.","Lower it behind your head with straight arms until your lats stretch.","Pull it back over your chest."],
+lext:["Sit with the pad on your lower shins.","Straighten your legs and squeeze your quads at the top.","Lower slowly."],
+ipress:["Set the bench to a 30 to 45° incline and lie back with your feet planted and your shoulder blades pulled together.","Lower the weight to your upper chest with your elbows about 45° from your body.","Press up until your arms are straight."],
+rfly:["Hinge forward at the hips with a flat back and let the weights hang under your shoulders.","Raise your arms out to the sides up to shoulder height, squeezing your shoulder blades.","Lower slowly without swinging your body."],
+kick:["Hinge forward with a flat back and bring your upper arm parallel to the floor, elbow bent.","Straighten your arm backward until it is fully extended, keeping your upper arm still.","Bend your elbow slowly to return."],
+splank:["Lie on your side with your forearm on the floor under your shoulder and your feet stacked.","Lift your hips until your body is a straight line from head to feet.","Hold, then lower your hips with control. Repeat on the other side."],
+lcr:["Lie on your back with your knees bent and your feet flat, hands behind your head or holding a weight on your chest.","Curl your shoulders off the floor by squeezing your abs.","Lower slowly without pulling on your neck."],
+bridge:["Lie on your back with your knees bent and your feet flat, close to your glutes. Keep your head, arms and feet still.","Push through your heels to lift your hips until your body is a straight line from shoulders to knees. Squeeze your glutes and hold for 2 seconds.","Lower your hips slowly back to the floor."],
+bicy:["Lie on your back with your hands behind your head.","Bring one knee in and turn the opposite shoulder toward it while the other leg extends.","Switch sides slowly."],
+prony:["Lie face down with your arms forward in a Y shape.","Lift your arms off the floor, squeezing your shoulder blades together.","Lower slowly."]};
+function hw(t){var s=HW[t];return s?'<div class="how"><ol>'+s.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")+"</ol></div>":""}
 function st(i,o){var e=$(i);if(e)for(var k in o)e.setAttribute(k,o[k])}
-function an(t){cancelAnimationFrame(raf);if(!PS[t])return;var p=PS[t].split("|").map(function(x){return x.split(",").map(Number)}),a=p[0],b=p[1],t0=performance.now();
-function fr(n){if(!$("av"))return;var u=(1-Math.cos((n-t0)/4000*6.2832))/2,q=a.map(function(v,i){return v+(b[i]-v)*u}),J=function(i){return q[2*i]+","+q[2*i+1]};
-st("hd",{cx:q[0],cy:q[1]});st("ar",{points:J(1)+" "+J(2)+" "+J(3)});st("lg",{points:J(4)+" "+J(5)+" "+J(6)});st("to",{x1:q[2],y1:q[3],x2:q[8],y2:q[9]});st("eq",{cx:q[6],cy:q[7]});raf=requestAnimationFrame(fr)}
+function an(t){cancelAnimationFrame(raf);if(!PS[t])return;var p=PS[t].split("|").map(function(x){return x.split(",").map(Number)}),a=p[0],b=p[1],t0=performance.now(),hd=HOLD[t],fp=FP[t]&&FP[t].split("|").map(function(x){return x.split(",").map(Number)});
+function ez(x){return (1-Math.cos(Math.PI*x))/2}
+function fr(n){if(!$("av"))return;var ph=((n-t0)%4000)/4000,u=hd?(ph<.35?ez(ph/.35):ph<.6?1:ph<.95?1-ez((ph-.6)/.35):0):(1-Math.cos(ph*6.2832))/2,q=a.map(function(v,i){return v+(b[i]-v)*u}),J=function(i){return q[2*i]+","+q[2*i+1]};
+st("hd",{cx:q[0],cy:q[1]});st("ar",{points:J(1)+" "+J(2)+" "+J(3)});st("lg",{points:J(4)+" "+J(5)+" "+J(6)});st("to",{x1:q[2],y1:q[3],x2:q[8],y2:q[9]});st("eq",{cx:q[6],cy:q[7]});
+if(fp){var f=fp[0].map(function(v,i){return v+(fp[1][i]-v)*u}),m=function(x){return 100-x},L=f.length>14;
+st("fh",{cx:f[0],cy:f[1]});
+st("ft",{d:"M"+(f[2]-12)+" "+f[3]+"H"+(f[2]+12)+"M"+f[2]+" "+f[3]+"L"+f[4]+" "+f[5]+"M"+(f[4]-6)+" "+f[5]+"H"+(f[4]+6)});
+st("fa",{points:(f[2]+12)+","+f[3]+" "+f[6]+","+f[7]+" "+f[8]+","+f[9]});
+st("fb",{points:(f[2]-12)+","+f[3]+" "+m(f[6])+","+f[7]+" "+m(f[8])+","+f[9]});
+st("fc",{points:(f[4]+6)+","+f[5]+" "+f[10]+","+f[11]+" "+f[12]+","+f[13]});
+st("fd",{points:(f[4]-6)+","+f[5]+" "+(L?f[14]:m(f[10]))+","+(L?f[15]:f[11])+" "+(L?f[16]:m(f[12]))+","+(L?f[17]:f[13])});
+st("fe1",{cx:f[8],cy:f[9]});st("fe2",{cx:m(f[8]),cy:f[9]})}
+raf=requestAnimationFrame(fr)}
 raf=requestAnimationFrame(fr)}
 function bd(R,P,Q,n){var s='<svg viewBox="0 0 100 212"><circle class="sil" cx="50" cy="14" r="9"/><rect class="sil" x="32" y="26" width="36" height="76" rx="14"/><path class="sil" style="fill:none" stroke-width="11" d="M27 38L24 92M73 38L76 92"/><path class="sil" style="fill:none" stroke-width="15" d="M41 100L40 195M59 100L60 195"/>';
 for(var k in R){var c=P.indexOf(k)>=0?"hp":Q.indexOf(k)>=0?"hs":"";if(c){var r=R[k];s+='<ellipse class="'+c+'" cx="'+(50+r[0])+'" cy="'+r[1]+'" rx="'+r[2]+'" ry="'+r[3]+'"/>';if(r[0])s+='<ellipse class="'+c+'" cx="'+(50-r[0])+'" cy="'+r[1]+'" rx="'+r[2]+'" ry="'+r[3]+'"/>'}}
 return s+'<text x="50" y="209" text-anchor="middle" font-size="11" style="fill:var(--mut)">'+n+"</text></svg>"}
 function pn(d,j){var m=M[d][j].split("|"),t=m[0],P=m[1].split(","),Q=m[2]?m[2].split(","):[],L=function(a){return a.map(function(x){return LB[x]}).join(", ")};
-return '<div class="mvp"><svg class="av" id="av" viewBox="0 0 100 100"><path class="fl" d="M0 92H100"/><g class="pr">'+(PR[t]||"")+'</g><polyline id="lg"/><line id="to"/><polyline id="ar"/><circle id="hd" r="6"/><circle id="eq" r="4" style="display:'+(NE.indexOf(t)<0?"inline":"none")+'"/></svg><div class="bd">'+bd(FR,P,Q,"Front")+bd(BK,P,Q,"Back")+'</div></div><div class="note"><b>Feel it in:</b> '+L(P)+" (main, solid color)"+(Q.length?" · helping: "+L(Q)+" (light color)":"")+". New to this lift? Start light, move slowly (about 2 s up, 2 s down) and copy the animation.</div>"}
-$("list").addEventListener("click",function(e){var b=e.target.closest(".mv");if(b){O=O==b.dataset.m?"":b.dataset.m;draw()}});
+return '<div class="mvp"><svg class="av" id="av" viewBox="0 0 100 100">'+(FP[t]?'<text x="4" y="10" font-size="7" style="fill:var(--mut);stroke:none">Side view</text>':"")+'<path class="fl" d="M0 92H100"/><g class="pr">'+(PR[t]||"")+'</g><polyline id="lg"/><line id="to"/><polyline id="ar"/><circle id="hd" r="6"/><circle id="eq" r="4" style="display:'+(NE.indexOf(t)<0?"inline":"none")+'"/></svg>'+(FP[t]?'<svg class="fv" id="fv" viewBox="0 0 100 100"><text x="4" y="10" font-size="7" style="fill:var(--mut);stroke:none">'+(VL[t]||"Front view")+'</text><g class="pr">'+(PF[t]||"")+'</g><circle id="fh" r="7"/><path id="ft"/><polyline id="fa"/><polyline id="fb"/><polyline id="fc"/><polyline id="fd"/><circle class="eq" id="fe1" r="3.5"/><circle class="eq" id="fe2" r="3.5"/></svg>':"")+'<div class="bd">'+bd(FR,P,Q,"Front")+bd(BK,P,Q,"Back")+'</div></div><div class="note"><b>Feel it in:</b> '+L(P)+" (main, solid color)"+(Q.length?" · helping: "+L(Q)+" (light color)":"")+". New to this lift? Start light, move slowly (about 2 s up, 2 s down) and copy the animation.</div>"}
+$("list").addEventListener("click",function(e){var b=e.target.closest(".mv");if(!b)return;if(b.dataset.h){HO[b.dataset.h]=!HO[b.dataset.h];draw();return}O=O==b.dataset.m?"":b.dataset.m;draw()});
 th();
 tick();
 if(S.p)dp=copyP(S.p);
