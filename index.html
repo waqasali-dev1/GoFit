@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>4-Day PPL + Core Plan</title>
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--tx:#1b1b1b;--mut:#6b6b6b;--ac:#d9480f;--ln:#e4e1da;--ok:#2b8a3e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root:not([data-theme="light"]){}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141414;--card:#1f1f1f;--tx:#f0efec;--mut:#9a9a9a;--ac:#ff8a4c;--ln:#333;--ok:#51cf66}}
+:root[data-theme="dark"]{--bg:#141414;--card:#1f1f1f;--tx:#f0efec;--mut:#9a9a9a;--ac:#ff8a4c;--ln:#333;--ok:#51cf66}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:90px}
+.w{max-width:640px;margin:0 auto;padding:14px}
+h1{font-size:20px;margin:6px 0 2px}.sub{color:var(--mut);font-size:13px;margin-bottom:12px}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.tabs button{padding:10px 4px;border:1px solid var(--ln);background:var(--card);color:var(--tx);border-radius:10px;font-size:13px;font-weight:600}
+.tabs button small{display:block;font-weight:400;color:var(--mut);font-size:11px}
+.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}.tabs button.on small{color:#fff}
+.bar{height:6px;background:var(--ln);border-radius:4px;margin:8px 0 14px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ok);width:0;transition:width .2s}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:12px;margin-bottom:10px}
+.card h3{margin:0;font-size:16px}.meta{color:var(--mut);font-size:12.5px;margin:2px 0 8px}
+.note{font-size:12.5px;color:var(--mut);margin-top:6px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sets{display:flex;gap:6px;flex-wrap:wrap}
+.sets button{width:44px;height:44px;border-radius:50%;border:2px solid var(--ln);background:transparent;color:var(--tx);font-weight:700;font-size:15px}
+.sets button.d{background:var(--ok);border-color:var(--ok);color:#fff}
+input{width:84px;padding:10px;border:1px solid var(--ln);border-radius:8px;background:var(--bg);color:var(--tx);font-size:16px}
+.card.done{opacity:.6}
+.act{display:flex;gap:8px;margin-top:14px}
+.act button,.warm summary{flex:1;padding:12px;border-radius:10px;border:1px solid var(--ln);background:var(--card);color:var(--tx);font-size:14px;font-weight:600}
+.act .p{background:var(--ac);color:#fff;border-color:var(--ac)}
+.warm{margin-bottom:10px}.warm summary{list-style:none;cursor:pointer}.warm div{padding:10px 4px;font-size:14px}
+#t{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--ln);padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;justify-content:center}
+#t b{font-size:26px;font-variant-numeric:tabular-nums;min-width:70px}#t button{padding:9px 14px;border-radius:8px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font-weight:600}
+#t.go b{color:var(--ac)}#t.end b{color:var(--ok)}
+.mv{margin-top:8px;width:100%;padding:10px;border-radius:8px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font-weight:600;font-size:13px}.mvp{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}.mvp svg{background:var(--bg);border-radius:10px}.mvp .av{flex:1 1 52%;min-width:160px}.bd{display:flex;flex:1 1 40%;gap:4px;min-width:140px}.bd svg{flex:1;min-width:0;height:auto}#av{stroke:var(--tx);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none}#av .fl,#av .pr *{stroke:var(--mut);stroke-width:2}#av circle#eq{fill:var(--ac);stroke:none}.sil{fill:var(--ln);stroke:var(--ln);stroke-linecap:round}.hp{fill:var(--ac)}.hs{fill:var(--ac);opacity:.4}
+.chips{display:flex;gap:6px;margin:8px 0}.chips button{flex:1;padding:9px 4px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);border-radius:8px;font-size:12.5px;font-weight:600}.chips button.on{background:var(--ac);color:#fff;border-color:var(--ac)}.mini{padding:10px 12px;border-radius:8px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font-weight:600}
+</style></head><body><div class="w">
+<h1>PPL + Core · 4 Days</h1>
+<div class="sub">45–60 min per session · double progression: hit top reps on all sets, then add weight · deload week every 6th week</div>
+<div class="card"><h3>Nutrition targets · cut to ≤10% BF</h3><div class="chips" id="ch"></div><div id="nt"></div><div class="row" style="margin-top:10px"><input id="ek" inputmode="numeric" placeholder="kcal"><input id="ep" inputmode="numeric" placeholder="protein g"><button id="ad" class="mini">Add</button><button id="ud" class="mini">Reset</button></div></div>
+<div class="tabs" id="tabs"></div>
+<div class="bar"><i id="pb"></i></div>
+<details class="warm"><summary>Warm-up (5 min)</summary><div id="wu"></div></details>
+<div id="list"></div>
+<div class="act"><button id="fin" class="p">Finish session</button><button id="th">Theme</button></div>
+</div>
+<div id="t"><b id="tt">0:00</b><button id="a">+30s</button><button id="s">Stop</button></div>
+<script>
+var D=[
+{n:"Push",s:"Chest · Shoulders · Tri",wu:"Band pull-aparts ×15, arm circles, push-ups ×10, then 2 ramp-up sets of the first lift.",e:[
+["Barbell Bench Press",4,"5–8",150,"Heavy. Last set 1 rep shy of failure."],
+["Incline DB Press",3,"8–10",120,"30° bench, full stretch at bottom."],
+["Seated DB Shoulder Press",3,"8–10",120,"Neutral or slight angle, no lockout slam."],
+["Weighted Dips",3,"8–12",90,"Lean forward for chest emphasis."],
+["Cable Lateral Raise",4,"12–15",60,"Slow negative, last set add a drop set."],
+["Rope Pushdown + Overhead Ext (superset)",3,"10–12 each",60,"No rest between the two, then rest."]]},
+{n:"Pull",s:"Back · Rear delts · Bi",wu:"Dead hangs 2×20s, scap pull-ups ×8, band face pulls ×15, 2 ramp-up sets.",e:[
+["Weighted Pull-Up",4,"6–8",150,"Full hang to chin over bar."],
+["Barbell Row (or Chest-Supported)",4,"8–10",120,"Strict, pause at the torso."],
+["Single-Arm Cable Row",3,"10–12",90,"Long stretch, squeeze lats at the end."],
+["Face Pull",3,"15",60,"Elbows high, external rotate."],
+["Incline DB Curl",3,"10–12",60,"Full stretch at the bottom."],
+["Hammer Curl",2,"10–12",60,"Controlled, no swing."]]},
+{n:"Legs",s:"Quads · Hams · Calves",wu:"Bodyweight squats ×15, hip airplanes, leg swings, glute bridges ×12, 2–3 ramp-up sets.",e:[
+["Back Squat",4,"5–8",180,"Depth to parallel or below, brace hard."],
+["Romanian Deadlift",3,"8–10",120,"Hinge, feel hamstrings, flat back."],
+["Leg Press",3,"10–12",120,"Feet low and close for quads, deep range."],
+["Walking Lunge",3,"10 / leg",90,"Dumbbells at sides."],
+["Lying / Seated Leg Curl",3,"10–12",60,"2s squeeze at the top."],
+["Standing Calf Raise",4,"12–15",60,"Pause at the stretch."]]},
+{n:"Core+",s:"Abs · Delts · Arms",wu:"Cat-cow ×10, dead bugs ×10, bird dogs ×10, light band rotations.",e:[
+["Hanging Leg Raise",4,"10–15",75,"Curl pelvis up, no swinging."],
+["Cable Crunch",3,"12–15",60,"Round the spine, hips fixed."],
+["Ab Wheel Rollout",3,"8–12",75,"Ribs down, glutes tight."],
+["Pallof Press",3,"12 / side",45,"Anti-rotation, slow."],
+["Side Plank",3,"40s / side",30,"Stack hips, hold tight."],
+["Lateral Raise + Skull Crusher + Cable Curl (giant set)",3,"12 each",90,"3 rounds, rest after each round."]]}];
+var S={d:0,w:{},c:{},th:""};
+try{var r=JSON.parse(localStorage.getItem("wp1"));if(r)S=r}catch(e){}
+function sv(){try{localStorage.setItem("wp1",JSON.stringify(S))}catch(e){}}
+function th(){if(S.th)document.documentElement.setAttribute("data-theme",S.th);else document.documentElement.removeAttribute("data-theme")}
+var $=function(i){return document.getElementById(i)};
+function draw(){
+$("tabs").innerHTML=D.map(function(x,i){return '<button class="'+(i==S.d?'on':'')+'" data-i="'+i+'">'+x.n+'<small>Day '+(i+1)+'</small></button>'}).join("");
+var day=D[S.d];$("wu").textContent=day.wu;var tot=0,dn=0;
+$("list").innerHTML=day.e.map(function(e,j){
+var k=S.d+"-"+j,c=S.c[k]||[],w=S.w[k]||"";tot+=e[1];dn+=c.filter(Boolean).length;
+var all=c.filter(Boolean).length==e[1];
+var b="";for(var s=0;s<e[1];s++)b+='<button class="'+(c[s]?'d':'')+'" data-k="'+k+'" data-s="'+s+'" data-r="'+e[3]+'">'+(s+1)+'</button>';
+return '<div class="card'+(all?' done':'')+'"><h3>'+(j+1)+'. '+e[0]+'</h3><div class="meta">'+e[1]+' × '+e[2]+' · rest '+Math.floor(e[3]/60)+':'+('0'+e[3]%60).slice(-2)+'</div><div class="row"><div class="sets">'+b+'</div><input inputmode="decimal" placeholder="kg/lb" value="'+w+'" data-w="'+k+'"></div><div class="note">'+e[4]+'</div><button class="mv" data-m="'+k+'">'+(O==k?'Hide':'Show')+' movement &amp; muscles</button>'+(O==k?pn(S.d,j):'')+'</div>'}).join("");
+$("pb").style.width=(tot?dn/tot*100:0)+"%";if(O&&$("av"))an(M[S.d][+O.split("-")[1]].split("|")[0]);else cancelAnimationFrame(raf)}
+var iv,left=0;
+function tick(){$("tt").textContent=Math.floor(left/60)+":"+("0"+left%60).slice(-2);$("t").className=left>0?"go":"end";}
+function rest(n){clearInterval(iv);left=n;tick();iv=setInterval(function(){left--;if(left<=0){left=0;clearInterval(iv);try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}}tick()},1000)}
+$("tabs").onclick=function(e){var b=e.target.closest("button");if(b){S.d=+b.dataset.i;sv();draw()}};
+$("list").onclick=function(e){var b=e.target.closest(".sets button");if(!b)return;var k=b.dataset.k,s=+b.dataset.s;S.c[k]=S.c[k]||[];S.c[k][s]=!S.c[k][s];sv();draw();if(S.c[k][s])rest(+b.dataset.r)};
+$("list").oninput=function(e){var k=e.target.dataset.w;if(k){S.w[k]=e.target.value;sv()}};
+$("a").onclick=function(){rest(left+30)};$("s").onclick=function(){clearInterval(iv);left=0;tick()};
+$("fin").onclick=function(){Object.keys(S.c).forEach(function(k){if(k.split("-")[0]==S.d)delete S.c[k]});sv();draw();if(S.d<3){S.d++;sv();draw();window.scrollTo(0,0)}};
+$("th").onclick=function(){S.th=S.th=="dark"?"light":"dark";sv();th()};
+var N={t:{n:"Training",k:2000,p:135,f:55,c:241},s:{n:"Swim",k:1900,p:135,f:55,c:216},r:{n:"Rest",k:1750,p:135,f:55,c:179}};
+function dk(){return new Date().toLocaleDateString("en-CA")}
+function pb(l,v,t,u){return '<div class="meta" style="margin:8px 0 2px">'+l+': <b>'+v+'</b> / '+t+' '+u+'</div><div class="bar" style="margin:0"><i style="width:'+Math.min(100,v/t*100)+'%"></i></div>'}
+function nd(){var t=S.n||"t",x=N[t],e=(S.e&&S.e[dk()])||{k:0,p:0};
+$("ch").innerHTML=Object.keys(N).map(function(i){return '<button class="'+(i==t?'on':'')+'" data-n="'+i+'">'+N[i].n+'</button>'}).join("");
+$("nt").innerHTML=pb("Calories",e.k,x.k,"kcal")+pb("Protein",e.p,x.p,"g")+'<div class="note">Fat ~'+x.f+' g · Carbs ~'+x.c+' g · weigh in 3×/week, compare weekly averages</div>'}
+$("ch").onclick=function(e){var b=e.target.closest("button");if(b){S.n=b.dataset.n;sv();nd()}};
+$("ad").onclick=function(){var k=+$("ek").value||0,p=+$("ep").value||0;S.e=S.e||{};var d=dk(),o=S.e[d]||{k:0,p:0};S.e[d]={k:o.k+k,p:o.p+p};$("ek").value="";$("ep").value="";sv();nd()};
+$("ud").onclick=function(){S.e=S.e||{};delete S.e[dk()];sv();nd()};
+var O="",raf=0;
+var M=[["press|chest|delts,triceps","press|chest,delts|triceps","ohp|delts|triceps","dips|chest,triceps|delts","lat|delts|traps","push|triceps|"],["pullup|lats|biceps,reardelts","row|lats,traps|biceps,lowback,reardelts","crow|lats|biceps,reardelts,traps","fpull|reardelts|traps","curl|biceps|forearms","curl|biceps,forearms|"],["squat|quads,glutes|hams,lowback,abs","rdl|hams,glutes|lowback","lpress|quads|glutes","lunge|quads,glutes|hams","lcurl|hams|calves","calf|calves|"],["leghr|abs|obliques,forearms","crunch|abs|","roll|abs|delts,lats","pallof|obliques|abs","plank|obliques|abs,glutes","lat|delts,triceps,biceps|"]];
+var LB={chest:"Chest",delts:"Shoulders",reardelts:"Rear delts",biceps:"Biceps",triceps:"Triceps",forearms:"Forearms",abs:"Abs",obliques:"Obliques",lats:"Lats",traps:"Upper back",lowback:"Lower back",glutes:"Glutes",quads:"Quads",hams:"Hamstrings",calves:"Calves"};
+var FR={chest:[10,48,10,8],delts:[24,38,6,7],biceps:[26,58,4.5,10],forearms:[25,82,4,10],abs:[5,72,5,14],obliques:[15,74,4,13],quads:[9,132,9,24]};
+var BK={traps:[0,36,14,8],reardelts:[24,38,6,7],lats:[11,62,8,14],triceps:[26,58,4.5,10],forearms:[25,82,4,10],lowback:[0,84,10,7],glutes:[8,108,9,8],hams:[9,138,8,20],calves:[9,175,7,14]};
+var PS={press:"22,53,32,56,33,40,33,24,62,56,78,64,74,90|22,53,32,56,42,54,33,47,62,56,78,64,74,90",ohp:"45,18,45,32,55,38,49,24,45,62,66,60,66,88|45,18,45,32,47,18,46,4,45,62,66,60,66,88",dips:"50,10,50,22,51,37,52,52,46,50,48,68,40,84|48,24,48,36,38,44,52,52,44,64,48,78,40,90",lat:"50,12,50,28,50,43,52,56,50,58,52,75,50,90|50,12,50,28,64,29,78,31,50,58,52,75,50,90",push:"50,12,50,28,52,43,66,38,50,58,52,75,50,90|50,12,50,28,52,43,53,58,50,58,52,75,50,90",pullup:"50,22,50,38,51,23,52,8,50,68,52,80,46,90|50,10,50,26,44,30,52,8,50,56,52,68,46,80",row:"66,32,58,38,59,52,60,66,36,54,38,72,36,90|66,32,58,38,48,48,56,55,36,54,38,72,36,90",crow:"32,32,32,48,48,50,64,52,30,76,50,72,66,68|32,32,32,48,20,54,38,60,30,76,50,72,66,68",fpull:"50,12,50,28,65,29,80,30,50,58,52,75,50,90|50,12,50,28,63,27,55,15,50,58,52,75,50,90",curl:"50,12,50,28,52,43,53,58,50,58,52,75,50,90|50,12,50,28,53,43,64,32,50,58,52,75,50,90",squat:"50,12,50,28,42,36,49,28,50,58,52,75,50,90|57,30,50,44,42,50,49,42,34,72,62,68,50,90",rdl:"50,12,50,28,51,43,53,58,50,58,52,75,50,90|73,56,61,54,61,69,60,83,32,52,37,72,36,90",lpress:"8,46,14,54,20,62,28,64,28,68,38,48,56,58|8,46,14,54,20,62,28,64,28,68,48,52,70,38",lunge:"50,12,50,28,50,43,50,57,50,58,52,75,50,90|50,20,50,36,50,50,50,63,50,66,66,64,66,90",lcurl:"20,56,28,58,24,66,20,64,56,58,72,58,88,62|20,56,28,58,24,66,20,64,56,58,72,58,70,40",calf:"50,12,50,28,50,43,50,57,50,58,52,75,50,90|50,4,50,20,50,35,50,49,50,50,52,67,52,82",leghr:"50,22,50,38,51,23,52,8,50,66,50,80,50,92|50,22,50,38,51,23,52,8,50,66,70,66,90,66",crunch:"40,26,38,40,46,38,42,30,36,70,56,82,24,88|56,50,50,52,58,60,52,52,36,70,56,82,24,88",roll:"34,26,36,40,42,56,46,72,34,64,34,86,14,88|74,66,66,72,78,80,88,88,34,76,34,86,14,88",pallof:"50,12,50,28,52,42,58,38,50,58,52,75,50,90|50,12,50,28,65,32,80,34,50,58,52,75,50,90",plank:"16,50,24,58,24,82,38,82,54,70,72,78,90,86|16,50,24,58,24,82,38,82,54,66,72,76,90,86"};
+var BN='<path d="M14 64H72"/>',UB='<path d="M30 8H74"/>',PR={press:BN,lcurl:BN,pullup:UB,leghr:UB,ohp:'<path d="M38 30V66H72"/>'},NE=["pullup","dips","leghr","plank","lcurl"];
+function st(i,o){var e=$(i);if(e)for(var k in o)e.setAttribute(k,o[k])}
+function an(t){cancelAnimationFrame(raf);var p=PS[t].split("|").map(function(x){return x.split(",").map(Number)}),a=p[0],b=p[1],t0=performance.now();
+function fr(n){if(!$("av"))return;var u=(1-Math.cos((n-t0)/4000*6.2832))/2,q=a.map(function(v,i){return v+(b[i]-v)*u}),J=function(i){return q[2*i]+","+q[2*i+1]};
+st("hd",{cx:q[0],cy:q[1]});st("ar",{points:J(1)+" "+J(2)+" "+J(3)});st("lg",{points:J(4)+" "+J(5)+" "+J(6)});st("to",{x1:q[2],y1:q[3],x2:q[8],y2:q[9]});st("eq",{cx:q[6],cy:q[7]});raf=requestAnimationFrame(fr)}
+raf=requestAnimationFrame(fr)}
+function bd(R,P,Q,n){var s='<svg viewBox="0 0 100 212"><circle class="sil" cx="50" cy="14" r="9"/><rect class="sil" x="32" y="26" width="36" height="76" rx="14"/><path class="sil" style="fill:none" stroke-width="11" d="M27 38L24 92M73 38L76 92"/><path class="sil" style="fill:none" stroke-width="15" d="M41 100L40 195M59 100L60 195"/>';
+for(var k in R){var c=P.indexOf(k)>=0?"hp":Q.indexOf(k)>=0?"hs":"";if(c){var r=R[k];s+='<ellipse class="'+c+'" cx="'+(50+r[0])+'" cy="'+r[1]+'" rx="'+r[2]+'" ry="'+r[3]+'"/>';if(r[0])s+='<ellipse class="'+c+'" cx="'+(50-r[0])+'" cy="'+r[1]+'" rx="'+r[2]+'" ry="'+r[3]+'"/>'}}
+return s+'<text x="50" y="209" text-anchor="middle" font-size="11" style="fill:var(--mut)">'+n+'</text></svg>'}
+function pn(d,j){var m=M[d][j].split("|"),t=m[0],P=m[1].split(","),Q=m[2]?m[2].split(","):[],L=function(a){return a.map(function(x){return LB[x]}).join(", ")};
+return '<div class="mvp"><svg class="av" id="av" viewBox="0 0 100 100"><path class="fl" d="M0 92H100"/><g class="pr">'+(PR[t]||"")+'</g><polyline id="lg"/><line id="to"/><polyline id="ar"/><circle id="hd" r="6"/><circle id="eq" r="4" style="display:'+(NE.indexOf(t)<0?'inline':'none')+'"/></svg><div class="bd">'+bd(FR,P,Q,"Front")+bd(BK,P,Q,"Back")+'</div></div><div class="note"><b>Feel it in:</b> '+L(P)+' (main, solid color)'+(Q.length?' · helping: '+L(Q)+' (light color)':'')+'. New to this lift? Start light, move slowly (about 2 s up, 2 s down) and copy the animation.</div>'}
+$("list").addEventListener("click",function(e){var b=e.target.closest(".mv");if(b){O=O==b.dataset.m?"":b.dataset.m;draw()}});
+th();draw();tick();nd();
+</script></body></html>
