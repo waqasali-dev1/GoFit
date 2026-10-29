@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>4-Day PPL + Core Plan</title>
+<title>Your gym plan</title>
 <style>
 :root{--bg:#f6f5f2;--card:#fff;--tx:#1b1b1b;--mut:#6b6b6b;--ac:#d9480f;--ln:#e4e1da;--ok:#2b8a3e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 :root:not([data-theme="light"]){}
@@ -30,100 +30,400 @@ input{width:84px;padding:10px;border:1px solid var(--ln);border-radius:8px;backg
 .act .p{background:var(--ac);color:#fff;border-color:var(--ac)}
 .warm{margin-bottom:10px}.warm summary{list-style:none;cursor:pointer}.warm div{padding:10px 4px;font-size:14px}
 #t{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--ln);padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;justify-content:center}
+#t[hidden]{display:none}
 #t b{font-size:26px;font-variant-numeric:tabular-nums;min-width:70px}#t button{padding:9px 14px;border-radius:8px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font-weight:600}
 #t.go b{color:var(--ac)}#t.end b{color:var(--ok)}
 .mv{margin-top:8px;width:100%;padding:10px;border-radius:8px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font-weight:600;font-size:13px}.mvp{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}.mvp svg{background:var(--bg);border-radius:10px}.mvp .av{flex:1 1 52%;min-width:160px}.bd{display:flex;flex:1 1 40%;gap:4px;min-width:140px}.bd svg{flex:1;min-width:0;height:auto}#av{stroke:var(--tx);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none}#av .fl,#av .pr *{stroke:var(--mut);stroke-width:2}#av circle#eq{fill:var(--ac);stroke:none}.sil{fill:var(--ln);stroke:var(--ln);stroke-linecap:round}.hp{fill:var(--ac)}.hs{fill:var(--ac);opacity:.4}
 .chips{display:flex;gap:6px;margin:8px 0}.chips button{flex:1;padding:9px 4px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);border-radius:8px;font-size:12.5px;font-weight:600}.chips button.on{background:var(--ac);color:#fff;border-color:var(--ac)}.mini{padding:10px 12px;border-radius:8px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font-weight:600}
-</style></head><body><div class="w">
-<h1>PPL + Core · 4 Days</h1>
-<div class="sub">45–60 min per session · double progression: hit top reps on all sets, then add weight · deload week every 6th week</div>
-<div class="card"><h3>Nutrition targets · cut to ≤10% BF</h3><div class="chips" id="ch"></div><div id="nt"></div><div class="row" style="margin-top:10px"><input id="ek" inputmode="numeric" placeholder="kcal"><input id="ep" inputmode="numeric" placeholder="protein g"><button id="ad" class="mini">Add</button><button id="ud" class="mini">Reset</button></div></div>
+.qopt{display:flex;flex-direction:column;gap:8px}
+.qopt button{text-align:left;padding:12px 14px;border-radius:10px;border:1px solid var(--ln);background:var(--bg);color:var(--tx);font:inherit;font-weight:600;font-size:14.5px;cursor:pointer}
+.qopt button small{display:block;font-weight:400;color:var(--mut);font-size:12.5px;margin-top:2px}
+.qopt button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.qopt button.on small{color:#fff}
+.qt{margin:0 0 10px;font-size:16px}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+.pills span{padding:6px 8px;border:1px solid var(--ln);background:var(--card);border-radius:999px;font-size:12px;font-weight:600}
+.dayt{font-weight:700;margin:0 0 8px}
+#rule{margin:0 0 12px}
+.tabs.many button{font-size:11px;padding:8px 2px;line-height:1.15}
+.tabs.many button small{font-size:10px}
+.act{flex-wrap:wrap}
+.act button{font-family:inherit;cursor:pointer}
+.act button:disabled{opacity:.45}
+body.quiz{padding-bottom:28px}
+</style></head><body class="quiz">
+<div class="w" id="quiz">
+<h1>Let's customise it for your gym</h1>
+<div class="sub">Five questions. The days, exercises, and session length follow what you pick.</div>
+<div id="qq"></div>
+<div class="act"><button id="build" class="p" type="button">Build my plan</button><button id="back" type="button" hidden>Back</button><button id="qth" type="button">Theme</button></div>
+</div>
+<div class="w" id="app" hidden>
+<h1 id="title">Your plan</h1>
+<div class="sub" id="sub"></div>
+<div class="pills" id="pills"></div>
+<div class="note" id="rule"></div>
+<div class="card"><h3 id="nh">Nutrition targets</h3><div class="chips" id="ch"></div><div id="nt"></div><div class="row" style="margin-top:10px"><input id="ek" inputmode="numeric" placeholder="kcal"><input id="ep" inputmode="numeric" placeholder="protein g"><button id="ad" class="mini" type="button">Add</button><button id="ud" class="mini" type="button">Reset</button></div></div>
 <div class="tabs" id="tabs"></div>
 <div class="bar"><i id="pb"></i></div>
+<div class="dayt" id="dl"></div>
+<div class="note" id="fatn" hidden></div>
 <details class="warm"><summary>Warm-up (5 min)</summary><div id="wu"></div></details>
 <div id="list"></div>
-<div class="act"><button id="fin" class="p">Finish session</button><button id="th">Theme</button></div>
+<div class="act"><button id="fin" class="p" type="button">Finish session</button><button id="ed" type="button">Change plan</button><button id="th" type="button">Theme</button></div>
 </div>
-<div id="t"><b id="tt">0:00</b><button id="a">+30s</button><button id="s">Stop</button></div>
+<div id="t" hidden><b id="tt">0:00</b><button id="a">+30s</button><button id="s">Stop</button></div>
 <script>
-var D=[
-{n:"Push",s:"Chest · Shoulders · Tri",wu:"Band pull-aparts ×15, arm circles, push-ups ×10, then 2 ramp-up sets of the first lift.",e:[
-["Barbell Bench Press",4,"5–8",150,"Heavy. Last set 1 rep shy of failure."],
-["Incline DB Press",3,"8–10",120,"30° bench, full stretch at bottom."],
-["Seated DB Shoulder Press",3,"8–10",120,"Neutral or slight angle, no lockout slam."],
-["Weighted Dips",3,"8–12",90,"Lean forward for chest emphasis."],
-["Cable Lateral Raise",4,"12–15",60,"Slow negative, last set add a drop set."],
-["Rope Pushdown + Overhead Ext (superset)",3,"10–12 each",60,"No rest between the two, then rest."]]},
-{n:"Pull",s:"Back · Rear delts · Bi",wu:"Dead hangs 2×20s, scap pull-ups ×8, band face pulls ×15, 2 ramp-up sets.",e:[
-["Weighted Pull-Up",4,"6–8",150,"Full hang to chin over bar."],
-["Barbell Row (or Chest-Supported)",4,"8–10",120,"Strict, pause at the torso."],
-["Single-Arm Cable Row",3,"10–12",90,"Long stretch, squeeze lats at the end."],
-["Face Pull",3,"15",60,"Elbows high, external rotate."],
-["Incline DB Curl",3,"10–12",60,"Full stretch at the bottom."],
-["Hammer Curl",2,"10–12",60,"Controlled, no swing."]]},
-{n:"Legs",s:"Quads · Hams · Calves",wu:"Bodyweight squats ×15, hip airplanes, leg swings, glute bridges ×12, 2–3 ramp-up sets.",e:[
-["Back Squat",4,"5–8",180,"Depth to parallel or below, brace hard."],
-["Romanian Deadlift",3,"8–10",120,"Hinge, feel hamstrings, flat back."],
-["Leg Press",3,"10–12",120,"Feet low and close for quads, deep range."],
-["Walking Lunge",3,"10 / leg",90,"Dumbbells at sides."],
-["Lying / Seated Leg Curl",3,"10–12",60,"2s squeeze at the top."],
-["Standing Calf Raise",4,"12–15",60,"Pause at the stretch."]]},
-{n:"Core+",s:"Abs · Delts · Arms",wu:"Cat-cow ×10, dead bugs ×10, bird dogs ×10, light band rotations.",e:[
-["Hanging Leg Raise",4,"10–15",75,"Curl pelvis up, no swinging."],
-["Cable Crunch",3,"12–15",60,"Round the spine, hips fixed."],
-["Ab Wheel Rollout",3,"8–12",75,"Ribs down, glutes tight."],
-["Pallof Press",3,"12 / side",45,"Anti-rotation, slow."],
-["Side Plank",3,"40s / side",30,"Stack hips, hold tight."],
-["Lateral Raise + Skull Crusher + Cable Curl (giant set)",3,"12 each",90,"3 rounds, rest after each round."]]}];
+var D=[],M=[];
 var S={d:0,w:{},c:{},th:""};
-try{var r=JSON.parse(localStorage.getItem("wp1"));if(r)S=r}catch(e){}
+try{var saved=JSON.parse(localStorage.getItem("wp1"));if(saved)S=saved}catch(e){}
+if(!S.w)S.w={};
+if(!S.c)S.c={};
+if(!S.d)S.d=0;
+var draft={};
+var O="",raf=0;
 function sv(){try{localStorage.setItem("wp1",JSON.stringify(S))}catch(e){}}
 function th(){if(S.th)document.documentElement.setAttribute("data-theme",S.th);else document.documentElement.removeAttribute("data-theme")}
 var $=function(i){return document.getElementById(i)};
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function restLabel(sec){return Math.floor(sec/60)+":"+("0"+sec%60).slice(-2)}
+var QUIZ=[
+{id:"days",q:"How many days can you reliably train?",opts:[
+{v:"3",t:"3 days — shorter schedule"},
+{v:"4",t:"4 days — balanced routine"},
+{v:"5",t:"5 days — more variety"}]},
+{id:"goal",q:"What's your main priority right now?",opts:[
+{v:"fat",t:"Fat loss + visible abs"},
+{v:"muscle",t:"Muscle size and strength"},
+{v:"recomp",t:"Both equally — body recomposition"}]},
+{id:"time",q:"How long per session?",opts:[
+{v:"45",t:"45 minutes"},
+{v:"60",t:"60 minutes"},
+{v:"90",t:"75–90 minutes"}]},
+{id:"equip",q:"What equipment do you have?",opts:[
+{v:"full",t:"Full gym — machines, cables, barbells and dumbbells"},
+{v:"limited",t:"Limited gym",d:"Dumbbells, a bench, and a pull-up bar"},
+{v:"home",t:"Home workouts",d:"Dumbbells or a backpack, plus bodyweight"}]},
+{id:"level",q:"Current training level",opts:[
+{v:"beginner",t:"Beginner"},
+{v:"intermediate",t:"Returning after a break / intermediate"},
+{v:"experienced",t:"Experienced and training consistently"}]}
+];
+var PL={
+days:{"3":"3 days","4":"4 days","5":"5 days"},
+goal:{fat:"Fat loss + visible abs",muscle:"Muscle size and strength",recomp:"Body recomposition"},
+time:{"45":"45 minutes","60":"60 minutes","90":"75–90 minutes"},
+equip:{full:"Full gym",limited:"Limited gym",home:"Home workouts"},
+level:{beginner:"Beginner",intermediate:"Intermediate",experienced:"Experienced"}
+};
+function copyQ(q){return {days:q.days,goal:q.goal,time:q.time,equip:q.equip,level:q.level}}
+function validQ(q){
+if(!q)return false;
+var ok=true;
+QUIZ.forEach(function(item){
+var hit=false;
+item.opts.forEach(function(o){if(o.v===q[item.id])hit=true});
+if(!hit)ok=false;
+});
+return ok;
+}
+function mv(full,limited,home,sets,reps,rest,note,anim,prime,help,opt){
+opt=opt||{};
+return {names:{full:full,limited:limited,home:home},sets:sets,reps:reps,rest:rest,note:note,anim:anim,prime:prime,help:help||"",lead:!!opt.lead,compound:!!opt.compound,core:!!opt.core,pri:opt.pri,beginner:opt.beginner||null};
+}
+function day(n,s,wu,list,coreFocus){return {n:n,s:s,wu:wu,e:list,coreFocus:!!coreFocus}}
+function resolveName(ex,q){
+var b=q.level==="beginner"&&ex.beginner&&ex.beginner[q.equip];
+return b||ex.names[q.equip];
+}
+function resolveAnim(ex,q){return typeof ex.anim==="string"?ex.anim:ex.anim[q.equip]}
+function timedReps(reps){return reps.indexOf("/")>=0||reps.indexOf("each")>=0||reps.indexOf("sec")>=0}
+function capOf(q){
+if(q.time==="90")return 99;
+if(q.days==="4")return q.time==="45"?4:6;
+return q.time==="45"?4:5;
+}
+function pickList(list,q,coreFocus){
+var cap=capOf(q);
+if(list.length<=cap)return list.slice();
+var ranked=list.map(function(ex,i){
+var pri=ex.pri!=null?ex.pri:i;
+if(q.goal==="fat"&&ex.core)pri-=2;
+if(q.goal==="muscle"&&ex.core&&!coreFocus)pri+=3;
+return {ex:ex,i:i,pri:pri};
+});
+ranked.sort(function(a,b){return a.pri-b.pri||a.i-b.i});
+return ranked.slice(0,cap).sort(function(a,b){return a.i-b.i}).map(function(r){return r.ex});
+}
+function prescribe(ex,q){
+var sets=ex.sets,rest=ex.rest,reps=ex.reps,note=ex.note,timed=timedReps(reps);
+if(q.level==="beginner"){
+sets=Math.max(2,sets-1);
+if(!timed)rest+=30;
+if(ex.compound&&!timed)reps="8–12";
+note=(timed?"Stop before form breaks. ":"Leave 2–3 reps in reserve. ")+note;
+}else if(q.level==="experienced"){
+if(q.time==="90"&&ex.lead&&sets<4)sets+=1;
+if(!ex.compound&&!timed)rest=Math.max(45,rest-15);
+if(!timed)note=note+" Last set close to failure if the form stays clean.";
+}
+if(q.goal==="fat"){
+rest=Math.max(ex.compound?75:45,Math.round(rest*0.75/15)*15);
+if(!timed&&ex.lead&&ex.compound&&q.level!=="beginner"&&(reps==="5–8"||reps==="6–8"||reps==="6–10"))reps="8–12";
+}else if(q.goal==="muscle"&&!timed){
+rest=ex.compound?Math.max(rest,150):Math.max(rest,75);
+if(ex.lead&&q.level==="experienced")reps="5–8";
+else if(ex.lead&&q.level==="intermediate")reps="6–10";
+}
+if(q.time==="45"&&sets>3)sets=3;
+if(q.days==="5"&&q.time==="60"&&sets>3)sets=3;
+return {sets:sets,rest:rest,reps:reps,note:note};
+}
+var BEG_SQUAT={full:"Goblet squat",limited:"Goblet squat",home:"Dumbbell goblet squat"};
+var BEG_PULL={full:"Lat pulldown",limited:"Band-assisted pull-up",home:"Inverted row"};
+var BEG_HANG={full:"Lying leg raise",limited:"Lying leg raise",home:"Lying leg raise"};
+var PROGS={
+"3":{title:"Full Body · 3 Days",blurb:"Shorter week. Each session trains the whole body, so every muscle is worked more than once.",days:[
+day("Full A","Day 1 — Squat, press and row","Bodyweight squats ×10, arm circles, shoulder-blade squeezes ×15, then 2 light sets of the squat.",[
+mv("Back Squat","Goblet squat","Dumbbell goblet squat",3,"6–10",150,"Brace, then sit to a depth you can stand up from smoothly.","squat","quads,glutes","hams,lowback,abs",{lead:1,compound:1,pri:0,beginner:BEG_SQUAT}),
+mv("Barbell Bench Press","Dumbbell bench press","Push-up",3,"6–10",120,"Full range. Stay tight through the midsection.","press","chest","delts,triceps",{compound:1,pri:1,beginner:{full:"Dumbbell bench press"}}),
+mv("Barbell Row","One-arm dumbbell row","One-arm dumbbell row",3,"8–10",120,"Pause on the ribs. Do not jerk from the lower back.",{full:"row",limited:"crow",home:"crow"},"lats,traps","biceps,lowback",{compound:1,pri:2}),
+mv("Seated leg curl","Dumbbell Romanian deadlift","Dumbbell Romanian deadlift",2,"10–12",75,"Feel the hamstrings. Keep the hips quiet.",{full:"lcurl",limited:"rdl",home:"rdl"},"hams","glutes",{pri:4}),
+mv("Cable crunch","Dead bug","Dead bug",2,"12–15",45,"Exhale and round. Do not pull on the neck.","crunch","abs","",{core:1,pri:3}),
+mv("Cable lateral raise","Dumbbell lateral raise","Dumbbell lateral raise",2,"12–15",60,"Strict. Stop at shoulder height.","lat","delts","traps",{pri:5})
+]),
+day("Full B","Day 2 — Hinge, shoulders and pull","Hip hinges ×10, arm circles, shoulder-blade squeezes ×15, then 2 light sets of the first hinge.",[
+mv("Romanian Deadlift","Dumbbell Romanian deadlift","Dumbbell Romanian deadlift",3,"8–10",150,"Soft knees, hips back, hamstrings loaded.","rdl","hams,glutes","lowback",{lead:1,compound:1,pri:0}),
+mv("Seated DB Shoulder Press","Seated dumbbell shoulder press","Dumbbell shoulder press",3,"8–10",120,"Ribs down. Press without leaning back.","ohp","delts","triceps",{compound:1,pri:1}),
+mv("Weighted Pull-Up","Pull-up or assisted pull-up","Inverted row",3,"6–8",150,"Full stretch, then pull the chest up.","pullup","lats","biceps,reardelts",{compound:1,pri:2,beginner:BEG_PULL}),
+mv("Walking Lunge","Reverse lunge","Reverse lunge",3,"8 / leg",90,"Front heel stays down. Knee tracks over the toes.","lunge","quads,glutes","hams",{compound:1,pri:4}),
+mv("Face Pull","Rear-delt dumbbell fly","Prone Y raise",2,"15",45,"Elbows high. Finish with the hands outside the ears.","fpull","reardelts","traps",{pri:5}),
+mv("Hanging knee raise","Lying leg raise","Lying leg raise",2,"10–12",60,"Curl the pelvis up. Do not swing.","leghr","abs","obliques",{core:1,pri:3,beginner:BEG_HANG}),
+mv("Incline dumbbell curl + overhead cable extension","Incline dumbbell curl + overhead dumbbell extension","Dumbbell curl + overhead dumbbell extension",2,"10–12 each",60,"Curl, then extend. Rest after the pair.","curl","biceps","triceps",{pri:6})
+]),
+day("Full C","Day 3 — Legs, upper volume and core","Easy lunges ×8 each side, shoulder-blade squeezes ×15, dead bugs ×8.",[
+mv("Leg Press","Walking lunge","Reverse lunge",3,"10–12",120,"Smooth reps. Own the bottom.",{full:"lpress",limited:"lunge",home:"lunge"},"quads","glutes",{lead:1,compound:1,pri:0}),
+mv("Incline DB Press","Incline dumbbell press","Incline push-up",3,"8–12",90,"Stretch at the bottom, squeeze at the top.","press","chest,delts","triceps",{compound:1,pri:1}),
+mv("Lat pulldown","Pull-up or assisted pull-up","Inverted row",3,"10–12",90,"Drive the elbows down and back.","pullup","lats","biceps",{compound:1,pri:2,beginner:BEG_PULL}),
+mv("Leg extension","Bulgarian split squat","Rear-foot-elevated split squat",2,"12–15",60,"Quads do the work. Stay controlled.",{full:"lpress",limited:"lunge",home:"lunge"},"quads","glutes",{pri:4}),
+mv("Cable lateral raise","Dumbbell lateral raise","Dumbbell lateral raise",2,"12–15",60,"Lead with the elbows.","lat","delts","traps",{pri:5}),
+mv("Cable crunch","Dead bug","Dead bug",3,"12–15",45,"Round the spine and exhale.","crunch","abs","",{core:1,pri:3}),
+mv("Side plank","Side plank","Side plank",2,"30–45 sec/side",30,"Straight line from head to feet.","plank","obliques","abs,glutes",{core:1,pri:6})
+])
+]},
+"4":{title:"PPL + Core · 4 Days",blurb:"Balanced routine: push, pull, legs, then core and arms.",days:[
+day("Push","Day 1 — Chest, shoulders and triceps","Shoulder-blade squeezes ×15, arm circles, push-ups ×10, then 2 ramp-up sets of the first lift.",[
+mv("Barbell Bench Press","Dumbbell bench press","Push-up",4,"5–8",150,"Brace, lower under control, press without bouncing.","press","chest","delts,triceps",{lead:1,compound:1,pri:0,beginner:{full:"Dumbbell bench press"}}),
+mv("Incline DB Press","Incline dumbbell press","Incline push-up",3,"8–10",120,"Full stretch at the bottom, then press up.","press","chest,delts","triceps",{compound:1,pri:1}),
+mv("Seated DB Shoulder Press","Seated dumbbell shoulder press","Dumbbell shoulder press",3,"8–10",120,"Ribs down. Do not slam the lockout.","ohp","delts","triceps",{compound:1,pri:2}),
+mv("Weighted Dips","Bench dip","Chair dip",3,"8–12",90,"Lean slightly forward. Control the bottom.","dips","chest,triceps","delts",{compound:1,pri:4,beginner:{full:"Assisted dip",limited:"Bench dip",home:"Chair dip"}}),
+mv("Cable Lateral Raise","Dumbbell lateral raise","Dumbbell lateral raise",4,"12–15",60,"Slow on the way down. Lead with the elbows.","lat","delts","traps",{pri:3}),
+mv("Rope Pushdown + Overhead Ext (superset)","Dumbbell skull crusher + overhead extension","Diamond push-up + overhead dumbbell extension",3,"10–12 each",60,"Do both moves, then rest.","push","triceps","",{pri:5}),
+mv("Cable fly","Dumbbell fly","Wide push-up",2,"12–15",60,"Soft elbows. Squeeze in the shortened position.","press","chest","delts",{pri:100})
+]),
+day("Pull","Day 2 — Back, rear delts and biceps","Shoulder-blade squeezes ×15, easy arm circles, then 2 light sets of the first pull.",[
+mv("Weighted Pull-Up","Pull-up or assisted pull-up","Inverted row",4,"6–8",150,"Full stretch, then pull the chest up.","pullup","lats","biceps,reardelts",{lead:1,compound:1,pri:0,beginner:BEG_PULL}),
+mv("Barbell Row (or Chest-Supported)","One-arm dumbbell row","One-arm dumbbell row",4,"8–10",120,"Pause at the top. Do not jerk.",{full:"row",limited:"crow",home:"crow"},"lats,traps","biceps,lowback,reardelts",{compound:1,pri:1}),
+mv("Single-Arm Cable Row","Chest-supported dumbbell row","Backpack row",3,"10–12",90,"Long stretch, then squeeze the working side.",{full:"crow",limited:"row",home:"crow"},"lats","biceps,reardelts,traps",{compound:1,pri:3}),
+mv("Face Pull","Rear-delt dumbbell fly","Prone Y raise",3,"15",60,"Elbows high. Rotate the hands out at the end.","fpull","reardelts","traps",{pri:2}),
+mv("Incline DB Curl","Incline dumbbell curl","Dumbbell curl",3,"10–12",60,"Full stretch at the bottom.","curl","biceps","forearms",{pri:4}),
+mv("Hammer Curl","Hammer curl","Hammer curl",2,"10–12",60,"Controlled. Do not swing.","curl","biceps,forearms","",{pri:5}),
+mv("Straight-arm pulldown","Dumbbell pullover","Dumbbell pullover",2,"12–15",60,"Arms stay long. Feel the lats.","pullup","lats","",{pri:100})
+]),
+day("Legs","Day 3 — Quads, hamstrings and calves","Bodyweight squats ×15, hip hinges ×10, leg swings, then 2 ramp-up sets.",[
+mv("Back Squat","Goblet squat","Dumbbell goblet squat",4,"5–8",180,"Brace hard. Depth you can keep a flat back.","squat","quads,glutes","hams,lowback,abs",{lead:1,compound:1,pri:0,beginner:BEG_SQUAT}),
+mv("Romanian Deadlift","Dumbbell Romanian deadlift","Dumbbell Romanian deadlift",3,"8–10",120,"Hinge until the hamstrings load. Keep the back flat.","rdl","hams,glutes","lowback",{compound:1,pri:1}),
+mv("Leg Press","Walking lunge","Reverse lunge",3,"10–12",120,"Control the bottom. Do not bounce.",{full:"lpress",limited:"lunge",home:"lunge"},"quads","glutes",{compound:1,pri:2}),
+mv("Walking Lunge","Split squat","Split squat",3,"10 / leg",90,"Long step. Front heel stays down.","lunge","quads,glutes","hams",{compound:1,pri:4}),
+mv("Lying / Seated Leg Curl","Dumbbell leg curl","Glute-bridge walkout",3,"10–12",60,"Squeeze for a second at the top.","lcurl","hams","",{pri:3}),
+mv("Standing Calf Raise","Standing dumbbell calf raise","Standing calf raise",4,"12–15",60,"Pause in the stretch, then rise all the way up.","calf","calves","",{pri:5}),
+mv("Leg extension","Bulgarian split squat","Rear-foot-elevated split squat",2,"12–15",60,"Control the bottom. Do not slam the knees.",{full:"lpress",limited:"lunge",home:"lunge"},"quads","glutes",{pri:100})
+]),
+day("Core+","Day 4 — Abs, delts and arms","Cat-cow ×10, dead bugs ×10, then 1 easy set of the first core move.",[
+mv("Hanging Leg Raise","Lying leg raise","Lying leg raise",4,"10–15",75,"Curl the pelvis. Do not swing.","leghr","abs","obliques,forearms",{core:1,pri:0,beginner:BEG_HANG}),
+mv("Cable Crunch","Weighted crunch","Dead bug",3,"12–15",60,"Round the spine. Keep the hips still.","crunch","abs","",{core:1,pri:1}),
+mv("Ab Wheel Rollout","Plank saw","Plank shoulder tap",3,"8–12",75,"Ribs down, glutes tight. Only go as far as you can stay braced.","roll","abs","delts,lats",{core:1,pri:4,beginner:{full:"Dead bug",limited:"Dead bug"}}),
+mv("Pallof Press","Slow dead bug hold","Bird dog",3,"12 / side",45,"Resist the rotation. Move slowly.","pallof","obliques","abs",{core:1,pri:2}),
+mv("Side Plank","Side Plank","Side Plank",3,"40s / side",30,"Hips stacked. Hold a straight line.","plank","obliques","abs,glutes",{core:1,pri:3}),
+mv("Lateral Raise + Skull Crusher + Cable Curl (giant set)","Lateral raise + skull crusher + dumbbell curl","Pike push-up + diamond push-up + dumbbell curl",3,"12 each",90,"Three moves in a row. Rest only after the round.","lat","delts,triceps,biceps","",{pri:5}),
+mv("Slow bicycle crunch","Slow bicycle crunch","Slow bicycle crunch",2,"12 / side",45,"Lower back stays down. Move one side at a time.","crunch","abs","obliques",{core:1,pri:100})
+],true)
+]},
+"5":{title:"Five-day programme",blurb:"This is the alternative for weeks when you want to focus on individual muscle groups and enjoy longer sessions across the week.",days:[
+day("Chest","Day 1 — Chest + back","Arm circles, shoulder-blade squeezes ×15, then 2 easy ramp-up sets of the first press.",[
+mv("Incline barbell or dumbbell press","Incline dumbbell press","Incline push-up",3,"8–10",120,"Full stretch at the bottom, then press up.","press","chest","delts,triceps",{lead:1,compound:1,pri:0,beginner:{full:"Incline dumbbell press"}}),
+mv("Flat machine press","Dumbbell bench press","Push-up",3,"10–12",90,"Full range. Squeeze at the top without slamming.","press","chest","delts,triceps",{compound:1,pri:1}),
+mv("Lat pulldown","Pull-up or assisted pull-up","Inverted row",3,"8–12",120,"Full stretch, then pull the elbows toward the hips.","pullup","lats","biceps,reardelts",{compound:1,pri:2,beginner:{limited:"Band-assisted pull-up",home:"Inverted row"}}),
+mv("Seated cable row","One-arm dumbbell row","One-arm dumbbell row",3,"10–12",90,"Long stretch, then pull toward the hip and pause.",{full:"row",limited:"crow",home:"crow"},"lats,traps","biceps,reardelts",{compound:1,pri:3}),
+mv("Cable fly","Dumbbell fly","Wide push-up",2,"12–15",60,"Soft elbows. Stop when the chest stops doing the work.","press","chest","delts",{pri:4}),
+mv("Straight-arm pulldown","Dumbbell pullover","Dumbbell pullover",2,"12–15",60,"Arms stay nearly straight. Feel the lats.","pullup","lats","",{pri:5})
+]),
+day("Arms","Day 2 — Biceps + triceps","Easy curls and arm extensions ×12, wrist circles, then 1 light set of the first curl.",[
+mv("EZ-bar curl","Dumbbell curl","Dumbbell curl",3,"8–12",75,"Elbows stay still. Lower until the arms are straight.","curl","biceps","forearms",{lead:1,pri:0}),
+mv("Incline dumbbell curl","Incline dumbbell curl","Seated dumbbell curl, elbow on the thigh",3,"10–12",75,"Let the arm stretch at the bottom.","curl","biceps","forearms",{pri:1}),
+mv("Hammer curl","Hammer curl","Hammer curl",2,"12",60,"Thumbs up. Do not swing.","curl","biceps,forearms","",{pri:2}),
+mv("Rope pushdown","Dumbbell skull crusher","Diamond push-up",3,"10–15",60,"Elbows stay close. Squeeze the triceps.","push","triceps","",{pri:3}),
+mv("Overhead cable extension","Overhead dumbbell extension","Overhead dumbbell extension",3,"10–15",60,"Upper arms stay beside the ears.","ohp","triceps","",{pri:4}),
+mv("Assisted dips","Bench dip","Chair dip",2,"8–12",75,"Stay upright so the triceps do the work.","dips","triceps","chest",{pri:5})
+]),
+day("Legs","Day 3 — Legs","Bodyweight squats ×15, hip hinges ×10, leg swings, then 2 ramp-up sets of the first squat.",[
+mv("Hack squat or back squat","Goblet squat","Dumbbell goblet squat",3,"6–10",180,"Brace before every rep. Depth you can own.","squat","quads,glutes","hams,lowback,abs",{lead:1,compound:1,pri:0,beginner:{full:"Hack squat",limited:"Goblet squat",home:"Dumbbell goblet squat"}}),
+mv("Leg press","Walking lunge","Reverse lunge",3,"10–12",120,"Control the bottom. Do not bounce.",{full:"lpress",limited:"lunge",home:"lunge"},"quads","glutes",{compound:1,pri:1}),
+mv("Romanian deadlift","Dumbbell Romanian deadlift","Dumbbell Romanian deadlift",3,"8–10",120,"Hinge until the hamstrings load. Keep the back flat.","rdl","hams,glutes","lowback",{compound:1,pri:2}),
+mv("Seated leg curl","Dumbbell leg curl","Glute-bridge walkout",3,"10–15",60,"Squeeze for a second at the top.","lcurl","hams","",{pri:3}),
+mv("Leg extension","Bulgarian split squat","Rear-foot-elevated split squat",2,"12–15",60,"Stay controlled. Do not slam the knees.",{full:"lpress",limited:"lunge",home:"lunge"},"quads","glutes",{pri:4}),
+mv("Calf raises","Standing dumbbell calf raise","Standing calf raise",3,"12–20",45,"Pause in the stretch, then rise all the way up.","calf","calves","",{pri:5})
+]),
+day("Delts","Day 4 — Shoulders + core","Arm circles, shoulder-blade squeezes ×15, dead bugs ×8, then 1 light set of the press.",[
+mv("Seated dumbbell shoulder press","Seated dumbbell shoulder press","Dumbbell shoulder press",3,"8–12",120,"Press slightly in front of the ears. Do not slam the lockout.","ohp","delts","triceps",{lead:1,compound:1,pri:0}),
+mv("Cable lateral raises","Dumbbell lateral raise","Dumbbell lateral raise",4,"12–20",45,"Lead with the elbows. Stop at shoulder height.","lat","delts","traps",{pri:1}),
+mv("Reverse pec deck","Rear-delt dumbbell fly","Bent-over rear-delt raise",3,"12–15",60,"Squeeze the rear delts, not the neck.","fpull","reardelts","traps",{pri:4}),
+mv("Face pulls","Rear-delt fly, elbows high","Prone Y raise",2,"15",45,"Pull toward the face and rotate the hands out.","fpull","reardelts","traps",{pri:6}),
+mv("Cable crunch","Weighted crunch","Dead bug",3,"12–15",45,"Round the spine. Keep the hips still.","crunch","abs","",{core:1,pri:2}),
+mv("Hanging knee raise","Lying leg raise","Lying leg raise",3,"10–15",60,"Curl the pelvis up. Do not swing.","leghr","abs","obliques,forearms",{core:1,pri:5,beginner:BEG_HANG}),
+mv("Side plank","Side plank","Side plank",2,"30–45 sec/side",30,"Hips stacked. Hold a straight line.","plank","obliques","abs,glutes",{core:1,pri:3})
+],true),
+day("Upper","Day 5 — Upper-body growth","Two easy sets of the first press and the first row. Shoulder-blade squeezes ×15.",[
+mv("Incline machine press","Incline dumbbell press","Decline push-up",3,"10–12",90,"Same path every rep. Control the stretch.","press","chest,delts","triceps",{lead:1,compound:1,pri:0}),
+mv("Chest-supported row","Chest-supported dumbbell row","One-arm dumbbell row",3,"10–12",90,"Pull toward the hip and pause. Keep the chest supported if you can.",{full:"row",limited:"row",home:"crow"},"lats,traps","biceps,reardelts",{compound:1,pri:1}),
+mv("Neutral-grip pulldown","Neutral-grip pull-up","Backpack row",3,"10–12",90,"Full stretch, then pull the chest up.","pullup","lats","biceps",{compound:1,pri:2}),
+mv("Cable fly","Dumbbell fly","Wide push-up",2,"12–15",60,"Soft elbows. Keep the bend fixed.","press","chest","delts",{pri:4}),
+mv("Lateral raises","Dumbbell lateral raise","Dumbbell lateral raise",2,"15–20",45,"Strict. A soft bend in the elbows.","lat","delts","traps",{pri:3}),
+mv("Preacher curls","Concentration curl","Dumbbell curl",2,"10–12",60,"Upper arm fixed. Lower slowly.","curl","biceps","forearms",{pri:5}),
+mv("Triceps rope pushdown","Dumbbell kickback","Diamond push-up",2,"12–15",45,"Elbows pinned. Squeeze at the end.","push","triceps","",{pri:6})
+])
+]}
+};
+function buildPlan(q){
+var prog=PROGS[q.days];
+D=[];
+M=[];
+prog.days.forEach(function(day){
+var chosen=pickList(day.e,q,day.coreFocus);
+var rows=[],moves=[];
+chosen.forEach(function(ex){
+var p=prescribe(ex,q);
+rows.push([resolveName(ex,q),p.sets,p.reps,p.rest,p.note]);
+moves.push(resolveAnim(ex,q)+"|"+ex.prime+"|"+(ex.help||""));
+});
+D.push({n:day.n,s:day.s,wu:day.wu,e:rows});
+M.push(moves);
+});
+var extra=q.equip==="home"?" Home sessions use dumbbells and bodyweight. A loaded backpack works if you do not have dumbbells.":q.equip==="limited"?" Built for dumbbells, a bench, and a pull-up bar.":"";
+document.title=prog.title;
+$("title").textContent=prog.title;
+$("sub").textContent=prog.blurb+extra;
+$("pills").innerHTML=[PL.days[q.days],PL.goal[q.goal],PL.time[q.time],PL.equip[q.equip],PL.level[q.level]].map(function(t){return "<span>"+esc(t)+"</span>"}).join("");
+$("rule").textContent=(q.goal==="fat"?"Keep the rests short. When every set hits the top of the rep range, add a little weight. ":"When every set hits the top of the rep range, add weight. ")+"Every 6th week, halve the sets and keep the loads easy.";
+}
+function renderQuiz(){
+var html="",done=0;
+QUIZ.forEach(function(q){
+var opts="";
+q.opts.forEach(function(o){
+var on=draft[q.id]===o.v;
+if(on)done++;
+opts+='<button type="button" class="'+(on?"on":"")+'" data-k="'+q.id+'" data-v="'+o.v+'">'+esc(o.t)+(o.d?"<small>"+esc(o.d)+"</small>":"")+"</button>";
+});
+html+='<div class="card"><h3 class="qt">'+esc(q.q)+'</h3><div class="qopt">'+opts+"</div></div>";
+});
+html+='<div class="note">'+done+" of "+QUIZ.length+" answered</div>";
+$("qq").innerHTML=html;
+$("build").disabled=done!==QUIZ.length;
+$("build").textContent=S.q?"Update my plan":"Build my plan";
+$("back").hidden=!validQ(S.q);
+}
+function showQuiz(){
+document.title="Let's customise it for your gym";
+document.body.classList.add("quiz");
+$("quiz").hidden=false;
+$("app").hidden=true;
+$("t").hidden=true;
+renderQuiz();
+}
+function showApp(){
+document.body.classList.remove("quiz");
+$("quiz").hidden=true;
+$("app").hidden=false;
+$("t").hidden=false;
+buildPlan(S.q);
+draw();
+nd();
+}
 function draw(){
-$("tabs").innerHTML=D.map(function(x,i){return '<button class="'+(i==S.d?'on':'')+'" data-i="'+i+'">'+x.n+'<small>Day '+(i+1)+'</small></button>'}).join("");
-var day=D[S.d];$("wu").textContent=day.wu;var tot=0,dn=0;
+if(!D.length)return;
+if(S.d>=D.length||S.d<0)S.d=0;
+$("tabs").className="tabs"+(D.length>=5?" many":"");
+$("tabs").style.gridTemplateColumns="repeat("+D.length+",1fr)";
+$("tabs").innerHTML=D.map(function(x,i){return '<button type="button" class="'+(i==S.d?"on":"")+'" data-i="'+i+'">'+esc(x.n)+"<small>Day "+(i+1)+"</small></button>"}).join("");
+var day=D[S.d];
+$("dl").textContent=day.s;
+var fat=S.q&&S.q.goal==="fat"&&S.q.time!=="45";
+$("fatn").hidden=!fat;
+$("fatn").textContent=fat?"If you finish with time left, add 5–8 minutes of easy cardio.":"";
+$("wu").textContent=day.wu;
+var tot=0,dn=0;
 $("list").innerHTML=day.e.map(function(e,j){
-var k=S.d+"-"+j,c=S.c[k]||[],w=S.w[k]||"";tot+=e[1];dn+=c.filter(Boolean).length;
+var k=S.d+"-"+j,c=S.c[k]||[],w=S.w[e[0]]||"";
+tot+=e[1];dn+=c.filter(Boolean).length;
 var all=c.filter(Boolean).length==e[1];
-var b="";for(var s=0;s<e[1];s++)b+='<button class="'+(c[s]?'d':'')+'" data-k="'+k+'" data-s="'+s+'" data-r="'+e[3]+'">'+(s+1)+'</button>';
-return '<div class="card'+(all?' done':'')+'"><h3>'+(j+1)+'. '+e[0]+'</h3><div class="meta">'+e[1]+' × '+e[2]+' · rest '+Math.floor(e[3]/60)+':'+('0'+e[3]%60).slice(-2)+'</div><div class="row"><div class="sets">'+b+'</div><input inputmode="decimal" placeholder="kg/lb" value="'+w+'" data-w="'+k+'"></div><div class="note">'+e[4]+'</div><button class="mv" data-m="'+k+'">'+(O==k?'Hide':'Show')+' movement &amp; muscles</button>'+(O==k?pn(S.d,j):'')+'</div>'}).join("");
-$("pb").style.width=(tot?dn/tot*100:0)+"%";if(O&&$("av"))an(M[S.d][+O.split("-")[1]].split("|")[0]);else cancelAnimationFrame(raf)}
+var b="";
+for(var s=0;s<e[1];s++)b+='<button type="button" class="'+(c[s]?"d":"")+'" data-k="'+k+'" data-s="'+s+'" data-r="'+e[3]+'">'+(s+1)+"</button>";
+return '<div class="card'+(all?" done":"")+'"><h3>'+(j+1)+". "+esc(e[0])+'</h3><div class="meta">'+e[1]+" × "+esc(e[2])+" · rest "+restLabel(e[3])+'</div><div class="row"><div class="sets">'+b+'</div><input inputmode="decimal" placeholder="kg/lb" value="'+esc(w)+'" data-w="'+esc(e[0])+'"></div><div class="note">'+esc(e[4])+'</div><button type="button" class="mv" data-m="'+k+'">'+(O==k?"Hide":"Show")+' movement &amp; muscles</button>'+(O==k?pn(S.d,j):"")+"</div>";
+}).join("");
+$("pb").style.width=(tot?dn/tot*100:0)+"%";
+if(O&&$("av"))an(M[S.d][+O.split("-")[1]].split("|")[0]);else cancelAnimationFrame(raf);
+}
 var iv,left=0;
-function tick(){$("tt").textContent=Math.floor(left/60)+":"+("0"+left%60).slice(-2);$("t").className=left>0?"go":"end";}
+function tick(){$("tt").textContent=Math.floor(left/60)+":"+("0"+left%60).slice(-2);$("t").className=left>0?"go":"end"}
 function rest(n){clearInterval(iv);left=n;tick();iv=setInterval(function(){left--;if(left<=0){left=0;clearInterval(iv);try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}}tick()},1000)}
 $("tabs").onclick=function(e){var b=e.target.closest("button");if(b){S.d=+b.dataset.i;sv();draw()}};
 $("list").onclick=function(e){var b=e.target.closest(".sets button");if(!b)return;var k=b.dataset.k,s=+b.dataset.s;S.c[k]=S.c[k]||[];S.c[k][s]=!S.c[k][s];sv();draw();if(S.c[k][s])rest(+b.dataset.r)};
 $("list").oninput=function(e){var k=e.target.dataset.w;if(k){S.w[k]=e.target.value;sv()}};
-$("a").onclick=function(){rest(left+30)};$("s").onclick=function(){clearInterval(iv);left=0;tick()};
-$("fin").onclick=function(){Object.keys(S.c).forEach(function(k){if(k.split("-")[0]==S.d)delete S.c[k]});sv();draw();if(S.d<3){S.d++;sv();draw();window.scrollTo(0,0)}};
-$("th").onclick=function(){S.th=S.th=="dark"?"light":"dark";sv();th()};
-var N={t:{n:"Training",k:2000,p:135,f:55,c:241},s:{n:"Swim",k:1900,p:135,f:55,c:216},r:{n:"Rest",k:1750,p:135,f:55,c:179}};
+$("a").onclick=function(){rest(left+30)};
+$("s").onclick=function(){clearInterval(iv);left=0;tick()};
+$("fin").onclick=function(){Object.keys(S.c).forEach(function(k){if(k.split("-")[0]==S.d)delete S.c[k]});if(S.d<D.length-1){S.d++;window.scrollTo(0,0)}sv();draw()};
+function toggleTheme(){S.th=S.th=="dark"?"light":"dark";sv();th()}
+$("th").onclick=toggleTheme;
+$("qth").onclick=toggleTheme;
+$("qq").onclick=function(e){var b=e.target.closest("button");if(!b||!b.dataset.k)return;draft[b.dataset.k]=b.dataset.v;renderQuiz()};
+$("build").onclick=function(){if(!validQ(draft))return;var next=copyQ(draft);var changed=JSON.stringify(S.q||null)!==JSON.stringify(next);S.q=next;if(changed){S.c={};S.d=0;O=""}sv();showApp();window.scrollTo(0,0)};
+$("back").onclick=function(){if(!validQ(S.q))return;showApp();window.scrollTo(0,0)};
+$("ed").onclick=function(){draft=copyQ(S.q);showQuiz();window.scrollTo(0,0)};
 function dk(){return new Date().toLocaleDateString("en-CA")}
-function pb(l,v,t,u){return '<div class="meta" style="margin:8px 0 2px">'+l+': <b>'+v+'</b> / '+t+' '+u+'</div><div class="bar" style="margin:0"><i style="width:'+Math.min(100,v/t*100)+'%"></i></div>'}
-function nd(){var t=S.n||"t",x=N[t],e=(S.e&&S.e[dk()])||{k:0,p:0};
-$("ch").innerHTML=Object.keys(N).map(function(i){return '<button class="'+(i==t?'on':'')+'" data-n="'+i+'">'+N[i].n+'</button>'}).join("");
-$("nt").innerHTML=pb("Calories",e.k,x.k,"kcal")+pb("Protein",e.p,x.p,"g")+'<div class="note">Fat ~'+x.f+' g · Carbs ~'+x.c+' g · weigh in 3×/week, compare weekly averages</div>'}
+function pb(l,v,t,u){return '<div class="meta" style="margin:8px 0 2px">'+l+": <b>"+v+"</b> / "+t+" "+u+'</div><div class="bar" style="margin:0"><i style="width:'+Math.min(100,v/t*100)+'%"></i></div>'}
+function targets(){
+var add=!S.q?0:S.q.goal==="muscle"?400:S.q.goal==="recomp"?200:0;
+var label=!S.q||S.q.goal==="fat"?"fat loss and visible abs":S.q.goal==="muscle"?"muscle size and strength":"body recomposition";
+function row(n,k,c){return {n:n,k:k+add,p:135,f:55,c:c+add/4}}
+return {label:label,map:{t:row("Training",2000,241),s:row("Swim",1900,216),r:row("Rest",1750,179)}};
+}
+function nd(){
+var pack=targets(),N=pack.map,t=S.n&&N[S.n]?S.n:"t",x=N[t],e=(S.e&&S.e[dk()])||{k:0,p:0};
+$("nh").textContent="Nutrition targets · "+pack.label;
+$("ch").innerHTML=Object.keys(N).map(function(i){return '<button type="button" class="'+(i==t?"on":"")+'" data-n="'+i+'">'+N[i].n+"</button>"}).join("");
+$("nt").innerHTML=pb("Calories",e.k,x.k,"kcal")+pb("Protein",e.p,x.p,"g")+'<div class="note">Fat ~'+x.f+" g · Carbs ~"+x.c+" g · starting numbers for this goal. Weigh in 3×/week and compare weekly averages.</div>";
+}
 $("ch").onclick=function(e){var b=e.target.closest("button");if(b){S.n=b.dataset.n;sv();nd()}};
 $("ad").onclick=function(){var k=+$("ek").value||0,p=+$("ep").value||0;S.e=S.e||{};var d=dk(),o=S.e[d]||{k:0,p:0};S.e[d]={k:o.k+k,p:o.p+p};$("ek").value="";$("ep").value="";sv();nd()};
 $("ud").onclick=function(){S.e=S.e||{};delete S.e[dk()];sv();nd()};
-var O="",raf=0;
-var M=[["press|chest|delts,triceps","press|chest,delts|triceps","ohp|delts|triceps","dips|chest,triceps|delts","lat|delts|traps","push|triceps|"],["pullup|lats|biceps,reardelts","row|lats,traps|biceps,lowback,reardelts","crow|lats|biceps,reardelts,traps","fpull|reardelts|traps","curl|biceps|forearms","curl|biceps,forearms|"],["squat|quads,glutes|hams,lowback,abs","rdl|hams,glutes|lowback","lpress|quads|glutes","lunge|quads,glutes|hams","lcurl|hams|calves","calf|calves|"],["leghr|abs|obliques,forearms","crunch|abs|","roll|abs|delts,lats","pallof|obliques|abs","plank|obliques|abs,glutes","lat|delts,triceps,biceps|"]];
 var LB={chest:"Chest",delts:"Shoulders",reardelts:"Rear delts",biceps:"Biceps",triceps:"Triceps",forearms:"Forearms",abs:"Abs",obliques:"Obliques",lats:"Lats",traps:"Upper back",lowback:"Lower back",glutes:"Glutes",quads:"Quads",hams:"Hamstrings",calves:"Calves"};
 var FR={chest:[10,48,10,8],delts:[24,38,6,7],biceps:[26,58,4.5,10],forearms:[25,82,4,10],abs:[5,72,5,14],obliques:[15,74,4,13],quads:[9,132,9,24]};
 var BK={traps:[0,36,14,8],reardelts:[24,38,6,7],lats:[11,62,8,14],triceps:[26,58,4.5,10],forearms:[25,82,4,10],lowback:[0,84,10,7],glutes:[8,108,9,8],hams:[9,138,8,20],calves:[9,175,7,14]};
 var PS={press:"22,53,32,56,33,40,33,24,62,56,78,64,74,90|22,53,32,56,42,54,33,47,62,56,78,64,74,90",ohp:"45,18,45,32,55,38,49,24,45,62,66,60,66,88|45,18,45,32,47,18,46,4,45,62,66,60,66,88",dips:"50,10,50,22,51,37,52,52,46,50,48,68,40,84|48,24,48,36,38,44,52,52,44,64,48,78,40,90",lat:"50,12,50,28,50,43,52,56,50,58,52,75,50,90|50,12,50,28,64,29,78,31,50,58,52,75,50,90",push:"50,12,50,28,52,43,66,38,50,58,52,75,50,90|50,12,50,28,52,43,53,58,50,58,52,75,50,90",pullup:"50,22,50,38,51,23,52,8,50,68,52,80,46,90|50,10,50,26,44,30,52,8,50,56,52,68,46,80",row:"66,32,58,38,59,52,60,66,36,54,38,72,36,90|66,32,58,38,48,48,56,55,36,54,38,72,36,90",crow:"32,32,32,48,48,50,64,52,30,76,50,72,66,68|32,32,32,48,20,54,38,60,30,76,50,72,66,68",fpull:"50,12,50,28,65,29,80,30,50,58,52,75,50,90|50,12,50,28,63,27,55,15,50,58,52,75,50,90",curl:"50,12,50,28,52,43,53,58,50,58,52,75,50,90|50,12,50,28,53,43,64,32,50,58,52,75,50,90",squat:"50,12,50,28,42,36,49,28,50,58,52,75,50,90|57,30,50,44,42,50,49,42,34,72,62,68,50,90",rdl:"50,12,50,28,51,43,53,58,50,58,52,75,50,90|73,56,61,54,61,69,60,83,32,52,37,72,36,90",lpress:"8,46,14,54,20,62,28,64,28,68,38,48,56,58|8,46,14,54,20,62,28,64,28,68,48,52,70,38",lunge:"50,12,50,28,50,43,50,57,50,58,52,75,50,90|50,20,50,36,50,50,50,63,50,66,66,64,66,90",lcurl:"20,56,28,58,24,66,20,64,56,58,72,58,88,62|20,56,28,58,24,66,20,64,56,58,72,58,70,40",calf:"50,12,50,28,50,43,50,57,50,58,52,75,50,90|50,4,50,20,50,35,50,49,50,50,52,67,52,82",leghr:"50,22,50,38,51,23,52,8,50,66,50,80,50,92|50,22,50,38,51,23,52,8,50,66,70,66,90,66",crunch:"40,26,38,40,46,38,42,30,36,70,56,82,24,88|56,50,50,52,58,60,52,52,36,70,56,82,24,88",roll:"34,26,36,40,42,56,46,72,34,64,34,86,14,88|74,66,66,72,78,80,88,88,34,76,34,86,14,88",pallof:"50,12,50,28,52,42,58,38,50,58,52,75,50,90|50,12,50,28,65,32,80,34,50,58,52,75,50,90",plank:"16,50,24,58,24,82,38,82,54,70,72,78,90,86|16,50,24,58,24,82,38,82,54,66,72,76,90,86"};
 var BN='<path d="M14 64H72"/>',UB='<path d="M30 8H74"/>',PR={press:BN,lcurl:BN,pullup:UB,leghr:UB,ohp:'<path d="M38 30V66H72"/>'},NE=["pullup","dips","leghr","plank","lcurl"];
 function st(i,o){var e=$(i);if(e)for(var k in o)e.setAttribute(k,o[k])}
-function an(t){cancelAnimationFrame(raf);var p=PS[t].split("|").map(function(x){return x.split(",").map(Number)}),a=p[0],b=p[1],t0=performance.now();
+function an(t){if(!PS[t])return;cancelAnimationFrame(raf);var p=PS[t].split("|").map(function(x){return x.split(",").map(Number)}),a=p[0],b=p[1],t0=performance.now();
 function fr(n){if(!$("av"))return;var u=(1-Math.cos((n-t0)/4000*6.2832))/2,q=a.map(function(v,i){return v+(b[i]-v)*u}),J=function(i){return q[2*i]+","+q[2*i+1]};
 st("hd",{cx:q[0],cy:q[1]});st("ar",{points:J(1)+" "+J(2)+" "+J(3)});st("lg",{points:J(4)+" "+J(5)+" "+J(6)});st("to",{x1:q[2],y1:q[3],x2:q[8],y2:q[9]});st("eq",{cx:q[6],cy:q[7]});raf=requestAnimationFrame(fr)}
 raf=requestAnimationFrame(fr)}
 function bd(R,P,Q,n){var s='<svg viewBox="0 0 100 212"><circle class="sil" cx="50" cy="14" r="9"/><rect class="sil" x="32" y="26" width="36" height="76" rx="14"/><path class="sil" style="fill:none" stroke-width="11" d="M27 38L24 92M73 38L76 92"/><path class="sil" style="fill:none" stroke-width="15" d="M41 100L40 195M59 100L60 195"/>';
 for(var k in R){var c=P.indexOf(k)>=0?"hp":Q.indexOf(k)>=0?"hs":"";if(c){var r=R[k];s+='<ellipse class="'+c+'" cx="'+(50+r[0])+'" cy="'+r[1]+'" rx="'+r[2]+'" ry="'+r[3]+'"/>';if(r[0])s+='<ellipse class="'+c+'" cx="'+(50-r[0])+'" cy="'+r[1]+'" rx="'+r[2]+'" ry="'+r[3]+'"/>'}}
-return s+'<text x="50" y="209" text-anchor="middle" font-size="11" style="fill:var(--mut)">'+n+'</text></svg>'}
+return s+'<text x="50" y="209" text-anchor="middle" font-size="11" style="fill:var(--mut)">'+n+"</text></svg>"}
 function pn(d,j){var m=M[d][j].split("|"),t=m[0],P=m[1].split(","),Q=m[2]?m[2].split(","):[],L=function(a){return a.map(function(x){return LB[x]}).join(", ")};
-return '<div class="mvp"><svg class="av" id="av" viewBox="0 0 100 100"><path class="fl" d="M0 92H100"/><g class="pr">'+(PR[t]||"")+'</g><polyline id="lg"/><line id="to"/><polyline id="ar"/><circle id="hd" r="6"/><circle id="eq" r="4" style="display:'+(NE.indexOf(t)<0?'inline':'none')+'"/></svg><div class="bd">'+bd(FR,P,Q,"Front")+bd(BK,P,Q,"Back")+'</div></div><div class="note"><b>Feel it in:</b> '+L(P)+' (main, solid color)'+(Q.length?' · helping: '+L(Q)+' (light color)':'')+'. New to this lift? Start light, move slowly (about 2 s up, 2 s down) and copy the animation.</div>'}
+return '<div class="mvp"><svg class="av" id="av" viewBox="0 0 100 100"><path class="fl" d="M0 92H100"/><g class="pr">'+(PR[t]||"")+'</g><polyline id="lg"/><line id="to"/><polyline id="ar"/><circle id="hd" r="6"/><circle id="eq" r="4" style="display:'+(NE.indexOf(t)<0?"inline":"none")+'"/></svg><div class="bd">'+bd(FR,P,Q,"Front")+bd(BK,P,Q,"Back")+'</div></div><div class="note"><b>Feel it in:</b> '+L(P)+" (main, solid color)"+(Q.length?" · helping: "+L(Q)+" (light color)":"")+". New to this lift? Start light, move slowly (about 2 s up, 2 s down) and copy the animation.</div>"}
 $("list").addEventListener("click",function(e){var b=e.target.closest(".mv");if(b){O=O==b.dataset.m?"":b.dataset.m;draw()}});
-th();draw();tick();nd();
+th();
+tick();
+if(validQ(S.q))showApp();else showQuiz();
 </script></body></html>
