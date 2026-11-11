@@ -158,6 +158,7 @@ export default function App() {
         onMessage={onMessage}
         injectedJavaScriptBeforeContentLoaded={`
           window.__GOFIT_APP__=1;
+          document.documentElement.classList.add('gofit-app');
           (function(){
             var apply=function(){
               var m=document.querySelector('meta[name="viewport"]');

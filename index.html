@@ -43,6 +43,9 @@ window.dispatchEvent(new Event('sb-ready'));
 :root[data-theme="dark"]{--bg:#101010;--card:#1A1A1C;--tx:#FFFFFF;--mut:#9AA0A6;--ac:#FF6B00;--on:#101010;--ln:#2C2C2E;--ok:#00B4FF;--soft:#2A1708;--field:#17171A;--c2:#00B4FF;--c3:#E8EAED;--sh:0 16px 40px rgba(0,0,0,.45);--wash:radial-gradient(800px 400px at 80% -10%,#3A1E08 0%,transparent 55%),radial-gradient(700px 400px at 10% 0%,#0B2B3D 0%,transparent 50%),linear-gradient(180deg,#101010,#101010)}
 :root[data-theme="light"]{--bg:#F7F8F9;--card:#fff;--tx:#101010;--mut:#6B7280;--ac:#FF6B00;--on:#101010;--ln:#E8EAED;--ok:#0088CC;--soft:#FFF1E6;--field:#F4F6F7;--sh:0 12px 32px rgba(16,16,16,.08);--wash:radial-gradient(1200px 500px at 10% -10%,#FFE3CC 0%,transparent 50%),radial-gradient(900px 500px at 110% 0%,#D6F0FF 0%,transparent 46%),linear-gradient(180deg,#FFFFFF 0%,#F7F8F9 55%,#EDF6FC 100%)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-padding-bottom:140px;background:var(--bg);scrollbar-width:thin;scrollbar-color:rgba(140,146,156,.4) transparent}
+@media (display-mode:standalone){html{scrollbar-width:none}html::-webkit-scrollbar{display:none}}
+html.gofit-app,html.gofit-app body{scrollbar-width:none}
+html.gofit-app::-webkit-scrollbar,html.gofit-app body::-webkit-scrollbar{display:none}
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(140,146,156,.35);border-radius:99px;border:3px solid transparent;background-clip:padding-box}
