@@ -1637,7 +1637,7 @@ var dur=240;
 var dcs=getComputedStyle(document.documentElement),acs=getComputedStyle($("app"));
 var pt=(parseFloat(dcs.paddingTop)||0)+(parseFloat(acs.paddingTop)||0);
 var pb=(parseFloat(dcs.paddingBottom)||0)+(parseFloat(acs.paddingBottom)||0);
-nxt.style.cssText="position:fixed;top:0;left:0;right:0;bottom:0;z-index:80;overflow-y:auto;overscroll-behavior:contain;background:var(--bg);box-sizing:border-box;max-width:"+acs.maxWidth+";margin-left:auto;margin-right:auto;padding:"+pt+"px "+acs.paddingRight+" "+pb+"px "+acs.paddingLeft+";transform:translateX("+(dir*100)+"vw)";
+nxt.style.cssText="position:fixed;top:0;left:0;right:0;bottom:0;z-index:20;overflow-y:auto;overscroll-behavior:contain;background:var(--bg);box-sizing:border-box;max-width:"+acs.maxWidth+";margin-left:auto;margin-right:auto;padding:"+pt+"px "+acs.paddingRight+" "+pb+"px "+acs.paddingLeft+";transform:translateX("+(dir*100)+"vw)";
 void nxt.offsetWidth;
 var tr="transform "+dur+"ms cubic-bezier(.2,.8,.2,1)";
 cur.style.transition=tr;nxt.style.transition=tr;
